@@ -3,16 +3,17 @@
 var express = require('express');
 var router = express.Router();
 
-var storage = require('../utils/storage');
+var storage = require('../ractions/storage');
 
 router.get('/new', function (req, res, next) {
 
     storage.newStorage(function (err, id) {
+
         if (err) {
             console.log(err);
-            res.redirect('/');
+            res.redirect('/?a=error');
         }
-        else res.redirect('/?id=' + id);
+        else res.redirect('/s?id=' + id);
     })
 });
 

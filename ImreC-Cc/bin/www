@@ -7,7 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('ImreC-UI:server');
 var http = require('http');
-var onStart = require('../onstart');
+var onStart = require('../appstart');
 
 /**
  * Normalize a port into a number, string, or false.
