@@ -8,6 +8,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var indexRoute = require('./routes/index');
+var storageRoute = require('./routes/storage');
+
 // var s3formRoute = require('./routes/s3form');
 // var taskRoute = require('./routes/task');
 // var simpleDbRoute = require('./routes/simpledb');
@@ -27,6 +29,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRoute);
+app.use('/s', storageRoute);
 // app.use('/', s3formRoute);
 // app.use('/task', taskRoute);
 

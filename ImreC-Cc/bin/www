@@ -7,7 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('ImreC-UI:server');
 var http = require('http');
-// var onStart = require('../onstart');
+var onStart = require('../onstart');
 
 /**
  * Normalize a port into a number, string, or false.
@@ -80,8 +80,8 @@ var onListening = function () {
 /**
  * Listen on provided port, on all network interfaces.
  */
-// onStart.onStart(function () {
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
-// });
+onStart.onStart(function () {
+    server.listen(port);
+    server.on('error', onError);
+    server.on('listening', onListening);
+});
