@@ -17,4 +17,25 @@ router.get('/new', function (req, res, next) {
     })
 });
 
+router.get('/', function (req, res, next) {
+
+    var id = req.query.id;
+
+    storage.getFiles(id, function (err, files) {
+
+        if (err) {
+            console.log(err);
+            res.redirect('/?a=error');
+        }
+
+        else {
+            var renderParams = {
+                Files: files,
+                ID: id
+            };
+            res.render('storage', renderParams)
+        }
+    })
+});
+
 module.exports = router;

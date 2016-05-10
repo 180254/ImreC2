@@ -1,19 +1,19 @@
-extends ./base/layout.pug
+extends layout.pug
 
 block content
-    h3 ImreC&nbsp;- #[b Im]age&nbsp;#[b re]sizer in&nbsp;(Amazon)&nbsp;#[b C]loud v2
+    h3 ImreC&nbsp;v2&nbsp;- #[b Im]age&nbsp;#[b re]sizer in&nbsp;(Amazon)&nbsp;#[b C]loud
     p.
         Hello from #{ip}#[br]
         Supported&nbsp;image&nbsp;types: .png,&nbsp;.jpg,&nbsp;.bmp#[br]
         Supported&nbsp;scale&nbsp;range: from&nbsp;1%&nbsp;to&nbsp;200%
 
-    h3 Storage
-    p
-        span Images are grouped in groups called #[b Storage].#[br]
-        span Use your #[u private] unique URL of storage or ...#[br]#[br]
-        a(href="/s/new" class="btn btn-default" id="new-storage-b") click here to get #[b NEW Storage]
-
     if actionError
-        h3 Action error
+        h3.action-error Action error
         p.action-error.
             Something goes wrong. Sorry! Please try again later.
+
+    h3 Storage
+    p
+        span Images are grouped in #[u private] groups called #[b Storage].#[br]
+        span Use your, previously created, unique Storage URL or&nbsp;...#[br]#[br]
+        a(href="/s/new" class="btn btn-default" id="new-storage-b") click here to get #[b NEW Storage]
