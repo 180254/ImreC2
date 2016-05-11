@@ -32,7 +32,7 @@ router.get('/', function (req, res, next) {
             var renderParams = {
                 Files: files,
                 ID: id,
-                URL: common.fullUrl(req),
+                URL: common.domainUrl(req) + '/s?id=' + id,
                 S3Form: s3Form.getS3Form(req, id)
             };
             res.render('storage', renderParams)

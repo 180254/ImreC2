@@ -70,11 +70,14 @@ var clone = function (obj) {
 // http://stackoverflow.com/questions/10183291/how-to-get-the-full-url-in-express
 var fullUrl = function (req) {
     if (!req) return null;
-    return url.format({
-        protocol: req.protocol,
-        host: req.get('host'),
-        pathname: req.originalUrl
-    });
+    return req.protocol + '://' + req.get('host') + req.originalUrl;
+};
+
+// credits: friends @ stackoverflow
+// http://stackoverflow.com/questions/10183291/how-to-get-the-full-url-in-express
+var domainUrl = function (req) {
+    if (!req) return null;
+    return req.protocol + '://' + req.get('host')
 };
 
 // credits: friends @ stackoverflow
@@ -90,5 +93,6 @@ exports.uuid = uuid;
 exports.random2 = random2;
 exports.clone = clone;
 exports.fullUrl = fullUrl;
+exports.domainUrl = domainUrl;
 exports.pad = pad;
 

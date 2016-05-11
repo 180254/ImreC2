@@ -5,14 +5,14 @@ block content
 
     table(class="table table-striped padding-top")
         tr
-            td Storage ID
+            td(class="col-xs-1 middle") Storage ID
             td(class="breakable")=ID
         tr
-            td Storage URL
+            td(class="col-xs-2 middle") Storage URL
             td
-                a(href=URL class="breakable")=URL
+                a(href=escape(URL) class="breakable")=URL
         tr
-            td Task
+            td(class="col-xs-1 middle") Task
             td='?'
 
 
@@ -29,20 +29,18 @@ block content
     table(class="table table-striped padding-top")
         thead
             tr
-                th &nbsp;
-                th Collector
-                th Worker
-                th URL
+                th(class="col-xs-1 middle") &nbsp;
+                th(class="col-xs-1 middle") Collector
+                th(class="col-xs-1 middle") Worker
+                th(class="col-xs-8 middle") URL
         tbody
             each file in Files
                 tr
-                    td(class="col-xs-1 middle")
+                    td
                         input(type="checkbox")
-                    td(class="col-xs-1 middle")
+                    td
                         span='?'
-                        //span=file.Metadata.collector
-                    td(class="col-xs-1 middle")
+                    td
                         span='?'
-                        //span=file.Metadata.worker
-                    td(class="col-xs-8 middle")
-                        a(href=file.URL)=file.Name
+                    td
+                        a(href=escape(file.URL))=file.Name
