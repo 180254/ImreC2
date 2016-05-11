@@ -1,7 +1,7 @@
 'use strict';
 
 $(function () {
-
+    
     var initHideAble = function ($elem) {
         $elem.click(function () {
             $elem.slideUp('slow');
@@ -57,7 +57,7 @@ $(function () {
                 $('.bar[data-file="' + file.name + '"]')
                     .css('width', '100%')
                     .addClass('red')
-                    .html('Failed to add ' + file.name);
+                    .html('Upload fail: ' + file.name);
 
                 initHideAble($('.progress[data-file="' + file.name + '"]'));
             });

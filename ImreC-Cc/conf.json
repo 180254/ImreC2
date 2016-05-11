@@ -21,7 +21,8 @@
         ["starts-with", "$x-amz-meta-filename", ""],
         ["eq", "$x-amz-meta-uploader", ""],
         ["eq", "$x-amz-meta-collector", ""],
-        ["eq", "$x-amz-meta-worker", "?"]
+        ["eq", "$x-amz-meta-worker", "?"],
+        ["starts-with", "$Content-Type", "image/"]
       ]
     }
   }
