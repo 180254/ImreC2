@@ -9,12 +9,11 @@ var common = require('../utils/common');
 // *********************************************************************************************
 
 var newStorage = function (callback) {
-
-    var id = common.random2(STORAGE_ID_LEN);
+    var storageId = common.random2(STORAGE_ID_LEN);
 
     var params = {
         Bucket: aws.conf().S3.Name,
-        Key: id + '/' + INFO_JSON,
+        Key: storageId + '/' + INFO_JSON,
         ACL: 'private',
         Body: JSON.stringify({ '_': INFO_JSON }),
         ContentType: 'application/json'
@@ -22,7 +21,7 @@ var newStorage = function (callback) {
 
     aws.s3().upload(params, function (err, data) {
         if (err) callback(err);
-        else callback(null, id);
+        else callback(null, storageId);
     });
 
 };
@@ -30,7 +29,6 @@ var newStorage = function (callback) {
 // *********************************************************************************************
 
 var getFiles = function (id, callback) {
-
     var params = {
         Bucket: aws.conf().S3.Name,
         Prefix: id
@@ -40,22 +38,22 @@ var getFiles = function (id, callback) {
         if (err) callback(err);
 
         else {
-            var ok = false;
+            var infoFile = false;
             var files = [];
 
             data.Contents.forEach(function (entry) {
-                var nameWithoutPrefix = entry.Key.replace(/^([a-zA-Z0-9]+\/)(.*)/, '$2');
-                var url = aws.conf().S3.Url + '/' + id + '/' + nameWithoutPrefix;
+                var fileName = entry.Key.replace(/^([a-zA-Z0-9]+\/)(.*)/, '$2');
 
+                var file = {
+                    name: fileName,
+                    url: aws.conf().S3.Url + '/' + id + '/' + fileName
+                };
 
-                if (nameWithoutPrefix !== INFO_JSON) {
-                    files.push({ Name: nameWithoutPrefix, URL: url });
-                } else {
-                    ok = true;
-                }
+                if (file.name !== INFO_JSON) files.push(file);
+                else infoFile = true;
             });
 
-            if (!ok) callback('no such bucket with INFO_JSON file');
+            if (!infoFile) callback('no such bucket with INFO_JSON file');
             else callback(null, files);
         }
     });

@@ -101,4 +101,4 @@ S3Form.prototype.setField = function (fields, name, value) {
 };
 
 exports.Policy = Policy;
-exports.S3Form = S3Form;
+exports.s3form = S3Form;

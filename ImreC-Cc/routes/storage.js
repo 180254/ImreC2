@@ -22,18 +22,14 @@ router.get('/', function (req, res, next) {
     var id = req.query.id;
 
     storage.getFiles(id, function (err, files) {
-
-        if (err) {
-            console.log(err);
-            res.redirect('/?a=error');
-        }
+        if (err) res.redirect('/?a=error');
 
         else {
             var renderParams = {
-                Files: files,
-                ID: id,
-                URL: common.domainUrl(req) + '/s?id=' + id,
-                S3Form: s3Form.getS3Form(req, id)
+                files: files,
+                id: id,
+                url: common.domainUrl(req) + '/s?id=' + id,
+                s3form: s3Form.getS3Form(req, id)
             };
             res.render('storage', renderParams)
         }
