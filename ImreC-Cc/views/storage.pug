@@ -10,7 +10,7 @@ block content
         tr
             td(class="col-xs-2 middle") Storage URL
             td
-                a(href=escape(URL) class="breakable")=URL
+                a(href=encodeURI(URL) class="breakable")=URL
         tr
             td(class="col-xs-1 middle") Task
             td='?'
@@ -33,14 +33,15 @@ block content
                 th(class="col-xs-1 middle") Collector
                 th(class="col-xs-1 middle") Worker
                 th(class="col-xs-8 middle") URL
-        tbody
+
+        tbody(id="file-list")
             each file in Files
                 tr
                     td
-                        input(type="checkbox")
+                        input(type="checkbox" name="files" value=file.Name)
                     td
                         span='?'
                     td
                         span='?'
                     td
-                        a(href=escape(file.URL))=file.Name
+                        a(href=encodeURI(file.URL))=file.Name
