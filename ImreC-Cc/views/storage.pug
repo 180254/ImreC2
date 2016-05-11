@@ -3,13 +3,46 @@ extends layout.pug
 block content
     h3='Storage ' + ID
 
+    table(class="table table-striped padding-top")
+        tr
+            td Storage ID
+            td(class="breakable")=ID
+        tr
+            td Storage URL
+            td
+                a(href=URL class="breakable")=URL
+        tr
+            td Task
+            td='?'
+
+
+    form(action=S3Form.URL method="post" enctype="multipart/form-data" id="s3form" class="direct-upload" )
+        each key in S3Form.Fields
+            input(type="hidden" name=key.name value=key.value)
+
+        span(class="btn btn-default btn-file") click here to #[b ADD] some new FILES
+            input(type="file" name="file" id="file" required="required" multiple="multiple")
+
+    div(class="progress-bar-area")
+
     form
-    table(class="table table-striped")
-        each file in Files
+    table(class="table table-striped padding-top")
+        thead
             tr
-                td(class="col-xs-1")
-                    input(type="checkbox")
-                td(class="col-xs-1")
-                    img(src=file.URL, class="thumb" alt="(thumb)")
-                td(class="col-xs-11")
-                    a(href=file.URL)=file.Name
+                th &nbsp;
+                th Collector
+                th Worker
+                th URL
+        tbody
+            each file in Files
+                tr
+                    td(class="col-xs-1 middle")
+                        input(type="checkbox")
+                    td(class="col-xs-1 middle")
+                        span='?'
+                        //span=file.Metadata.collector
+                    td(class="col-xs-1 middle")
+                        span='?'
+                        //span=file.Metadata.worker
+                    td(class="col-xs-8 middle")
+                        a(href=file.URL)=file.Name

@@ -66,9 +66,15 @@ var conf = function () {
     return confHandler;
 };
 
+var cred = function () {
+    return AWS.config.credentials;
+};
+
 // *********************************************************************************************
 
 exports.initAws = initAws;
 exports.s3 = s3;
 exports.sdb = sdb;
 exports.conf = conf;
+exports.cred = cred;
+

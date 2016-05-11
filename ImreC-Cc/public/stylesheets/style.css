@@ -2,3 +2,67 @@
     color: #880000;
     font-weight: bold;
 }
+
+.progress-bar-area {
+    margin-top: 20px;
+}
+
+.progress {
+    position: relative;
+    height: 20px;
+    background: #C7DA9F;
+    border-radius: 1px;
+}
+
+.bar {
+    height: 20px;
+    background: #85C220;
+    text-align: center;
+    color: #FFFFFF;
+    font-size: 0.95em;
+    /* line-height: 1.00; */
+    font-family: "Arial Black", Gadget, sans-serif;
+}
+
+.bar.red {
+    background: tomato;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+.thumb {
+    height: 3em;
+}
+
+.middle {
+    vertical-align: middle !important;
+}
+
+.breakable {
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.padding-top {
+    padding-top: 1em;
+}
+

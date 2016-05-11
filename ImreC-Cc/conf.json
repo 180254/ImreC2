@@ -15,16 +15,13 @@
       "conditions": [
         ["starts-with", "$key", ""],
         {"bucket": "imrec-bucket"},
-        {"acl": "private"},
-        {"success_action_redirect": "/task/schedule"},
+        {"acl": "public-read"},
+        {"success_action_status": "2xx"},
         ["content-length-range", 1, 5242880],
         ["starts-with", "$x-amz-meta-filename", ""],
         ["eq", "$x-amz-meta-uploader", ""],
-        ["starts-with", "$x-amz-meta-task", ""],
         ["eq", "$x-amz-meta-collector", ""],
-        ["eq", "$x-amz-meta-scheduler", "?"],
-        ["eq", "$x-amz-meta-worker", "?"],
-        ["eq", "$x-amz-meta-status", "0"]
+        ["eq", "$x-amz-meta-worker", "?"]
       ]
     }
   }
