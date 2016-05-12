@@ -5,6 +5,10 @@
 
 /* ********************************************************************* */
 
+.hidden {
+    display: none !important;
+}
+
 .middle {
     vertical-align: middle !important;
 }

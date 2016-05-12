@@ -1,7 +1,7 @@
 extends layout.pug
 
 block content
-    h3='Storage ' + ID
+    h3='Storage ' + id
 
     table(class="table table-striped padding-top")
         tr
@@ -24,7 +24,7 @@ block content
 
     div(class="progress-bar-area padding-top")
 
-    table(class="table table-striped padding-top")
+    table(id="file-table" class="table table-striped padding-top")
         thead
             tr
                 th(class="col-xs-1 middle") &nbsp;

@@ -1,12 +1,16 @@
 'use strict';
 
 $(function () {
-    
+
     var initHideAble = function ($elem) {
         $elem.click(function () {
             $elem.slideUp('slow');
         })
     };
+
+    if ($('#file-list').find('tr').length === 0) {
+        $('#file-table').addClass('hidden')
+    }
 
     var $form = $('#s3form');
     $form.fileupload({
@@ -66,10 +70,14 @@ $(function () {
         done: function (event, data, x) {
             data.files.forEach(function (file) {
                 $('.progress[data-file="' + file.name + '"]').slideUp('slow');
-                var $fileList = $('#file-list');
 
+                var $fileList = $('#file-list');
                 if ($fileList.find('a:contains("' + file.name + '")').length !== 0)
                     return;
+
+                var $fileTable = $('#file-table');
+                if ($fileTable.hasClass('hidden'))
+                    $fileTable.removeClass('hidden');
 
                 var url = $form.attr('action');
                 var key = $form.find("input[name='key']");
