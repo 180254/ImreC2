@@ -22,7 +22,7 @@ router.get('/', function (req, res, next) {
     var id = req.query.id;
 
     storage.getFiles(id, function (err, files) {
-        if (err) res.redirect('/?a=error');
+        if (err) res.redirect('/?a=noSuchStorage');
 
         else {
             var renderParams = {

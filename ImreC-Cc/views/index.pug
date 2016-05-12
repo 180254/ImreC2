@@ -12,6 +12,12 @@ block content
         p.action-error.
             Something goes wrong. Sorry! Please try again later.
 
+    if noSuchStorage
+        h3.action-error No such storage
+        p.action-error.
+            Such storage doesn't exist.#[br]
+            Maybe it was deleted due to old age.
+
     h3 Storage
     p
         span Images are grouped in #[u private] groups called #[b Storage].#[br]

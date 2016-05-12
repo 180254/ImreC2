@@ -9,7 +9,8 @@ router.get('/', function (req, res, next) {
 
     var options = {
         ip: ip.ip(),
-        actionError: req.query.a === 'error'
+        actionError: req.query.a === 'error',
+        noSuchStorage: req.query.a === 'noSuchStorage'
     };
 
     res.render('index', options)

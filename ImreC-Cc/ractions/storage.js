@@ -41,8 +41,14 @@ var getFiles = function (id, callback) {
             var infoFile = false;
             var files = [];
 
-            data.Contents.forEach(function (entry) {
+            // some = breakable foreach :D
+            data.Contents.some(function (entry) {
                 var fileName = entry.Key.replace(/^([a-zA-Z0-9]+\/)(.*)/, '$2');
+
+                if ((id + '/' + fileName) !== entry.Key) {
+                    infoFile = false;
+                    return true;
+                }
 
                 var file = {
                     name: fileName,
@@ -51,6 +57,8 @@ var getFiles = function (id, callback) {
 
                 if (file.name !== INFO_JSON) files.push(file);
                 else infoFile = true;
+
+                return false;
             });
 
             if (!infoFile) callback('no such bucket with INFO_JSON file');
