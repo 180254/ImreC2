@@ -1,6 +1,9 @@
 'use strict';
 
+/* eslint-disable no-unused-vars */
 var initMeta = function (fileRow) {
+    /* eslint-enable no-unused-vars */
+
     var storageId = $('#storage-id').html();
 
     var cols = fileRow.find('td');

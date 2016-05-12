@@ -1,4 +1,5 @@
 'use strict';
+/* global initFile */
 
 var initHideAble = function ($elem) {
     $elem.click(function () {
@@ -76,10 +77,8 @@ $(function () {
                 var key = $form.find("input[name='key']");
                 var fullUrl = url + '/' + key;
 
-                //noinspection Eslint
                 initFile(file.name, fullUrl);
             });
         }
     });
-
 });
