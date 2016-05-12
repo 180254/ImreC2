@@ -1,11 +1,11 @@
 extends layout.pug
 
 block script
-    script(src="/javascripts/slider.js")
-    script(src="/javascripts/checkbox.js")
-    script(src="/javascripts/meta.js")
-    script(src="/javascripts/file.js")
-    script(src="/javascripts/s3form.js")
+    script(src="/js/slider.js")
+    script(src="/js/checkbox.js")
+    script(src="/js/meta.js")
+    script(src="/js/file.js")
+    script(src="/js/s3form.js")
 
 
 block content
@@ -13,6 +13,8 @@ block content
         div(class="loader busy")
 
     h3='Storage ' + id
+    p Refresh (#[b F5]) to obtain newest task state.
+
     table(class="table table-striped padding-top")
         tr
             td(class="col-xs-1 middle") Storage ID
