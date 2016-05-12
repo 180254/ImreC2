@@ -2,6 +2,7 @@ extends layout.pug
 
 block script
     script(src="/js/slider.js")
+    script(src="/js/task.js")
     script(src="/js/checkbox.js")
     script(src="/js/meta.js")
     script(src="/js/file.js")
@@ -25,39 +26,44 @@ block content
                 a(href=encodeURI(url) class="breakable")=url
         tr
             td(class="col-xs-1 middle") Task
-            td='?'
+            td(id="info-task")='?'
+        tr
+            td(class="col-xs-1 middle") Percent done
+            td(id="info-task-percent")='?'
 
-    h3='Tasks'
-    p.
-        The only available task is rescaling.#[br]
-        Supported&nbsp;image&nbsp;types: .png,&nbsp;.jpg,&nbsp;.bmp#[br]
-        Supported&nbsp;scale&nbsp;range: from&nbsp;1%&nbsp;to&nbsp;200%
+    unless isTask
+        h3='Tasks'
+        p.
+            The only available task is rescaling.#[br]
+            Supported&nbsp;image&nbsp;types: .png,&nbsp;.jpg,&nbsp;.bmp#[br]
+            Supported&nbsp;scale&nbsp;range: from&nbsp;1%&nbsp;to&nbsp;200%
 
-    form(class="form-horizontal padding-top")
-        div(class="form-group")
-            span(class="col-md-3 control-label") Selected images
-            div(class="col-md-3")
-                textarea(id="scale-images" class="form-control" readonly="readonly" rows="4") None
+        form(class="form-horizontal padding-top")
+            div(class="form-group")
+                span(class="col-md-3 control-label") Selected images
+                div(class="col-md-3")
+                    textarea(id="scale-images" class="form-control" readonly="readonly" rows="4") None
 
-        div(class="form-group")
-            label(for="scale-task" class="col-md-3 control-label") Requested scale (%)
-            div(class="col-md-3")
-                input(type="text" id="scale-task" name="scale-task" class="slider form-control"
-                data-slider-min="1" data-slider-max="200" data-slider-step="1" data-slider-value="75")
+            div(class="form-group")
+                label(for="scale-info" class="col-md-3 control-label") Requested scale (%)
+                div(class="col-md-3")
+                    input(type="text" id="scale-info" name="scale-info" class="slider form-control"
+                    data-slider-min="1" data-slider-max="200" data-slider-step="1" data-slider-value="75")
 
-        div(class="form-group")
-            div(class="col-md-offset-3 col-md-3")
-                input(type="submit" name="submit" value="Schedule that task" class="form-control")
+            div(class="form-group")
+                div(class="col-md-offset-3 col-md-3")
+                    input(type="submit" name="submit" value="Schedule that info" class="form-control")
 
     h3='Files'
 
-    form(action=s3form.url method="post" enctype="multipart/form-data" id="s3form")
-        each key in s3form.s3fields
-            input(type="hidden" name=key.name value=key.value)
+    unless isTask
+        form(action=s3form.url method="post" enctype="multipart/form-data" id="s3form")
+            each key in s3form.s3fields
+                input(type="hidden" name=key.name value=key.value)
 
-        span(class="btn btn-default btn-file") just #[b ADD] some new #[b FILES]
-            input(type="file" name="file" id="file" required="required" multiple="multiple")
-    div(class="progress-bar-area padding-top")
+            span(class="btn btn-default btn-file") just #[b ADD] some new #[b FILES]
+                input(type="file" name="file" id="file" required="required" multiple="multiple")
+        div(class="progress-bar-area padding-top")
 
     table(id="file-table" class="table table-striped padding-top")
         thead

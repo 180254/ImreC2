@@ -7,3 +7,4 @@
 
 /s/meta?s=STORAGE_ID&f=FILE_ID
 /s/file?s=STORAGE_ID
+/s/task?s=STORAGE_ID

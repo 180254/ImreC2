@@ -8,15 +8,29 @@ var common = require('../utils/common');
 
 // *********************************************************************************************
 
-var getInfo = function (storageId, callback) {
+var getTask = function (storage, callback) {
     var params = {
         Bucket: aws.conf().S3.Name,
-        Key: storageId + '/' + INFO_JSON
+        Key: storage + '/' + INFO_JSON
     };
 
-    aws.s3().headObject(params, function (err, data) {
-        if (err) callback(err.stack);
-        else callback(null);
+    aws.s3().getObject(params, function (err, data) {
+        if (err) callback(err.stack, null);
+        else callback(null, data.Body.toString());
+    });
+};
+
+// *********************************************************************************************
+
+var getInfo = function (storageId, callback) {
+    getTask(storageId, function (err, task) {
+        if (err) callback(err, null);
+
+        else {
+            var taskObj = JSON.parse(task);
+            var isTask = taskObj.task !== null;
+            callback(null, isTask);
+        }
     });
 };
 
@@ -27,7 +41,8 @@ var newStorage = function (callback) {
         Bucket: aws.conf().S3.Name,
         Key: storageId + '/' + INFO_JSON,
         ACL: 'private',
-        Body: JSON.stringify({ '_': INFO_JSON }),
+        Body: JSON.stringify({ task: null, files: null }),
+        // Body: JSON.stringify({ task: { scale: 70 }, files: 10 }),
         ContentType: 'application/json'
     };
 
@@ -93,9 +108,12 @@ var getMeta = function (storage, fileName, callback) {
     });
 };
 
+
 // *********************************************************************************************
 
 exports.getInfo = getInfo;
 exports.newStorage = newStorage;
 exports.getFiles = getFiles;
 exports.getMeta = getMeta;
+exports.getTask = getTask;
+

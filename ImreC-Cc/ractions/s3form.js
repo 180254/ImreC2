@@ -20,7 +20,7 @@ var getS3Form = function (req, storage) {
     s3Form.setField(s3Fields, 'x-amz-meta-filename', '${filename}');
     s3Form.setField(s3Fields, 'x-amz-meta-uploader', req.ip);
     s3Form.setField(s3Fields, 'x-amz-meta-collector', ipCopy);
-    s3Form.setField(s3Fields, 'x-amz-meta-worker', '?');
+    s3Form.setField(s3Fields, 'x-amz-meta-worker', '-');
 
     return {
         url: aws.conf().S3.Url,

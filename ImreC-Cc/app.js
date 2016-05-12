@@ -30,8 +30,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRoute);
 app.use('/s', storageRoute);
-// app.use('/', s3formRoute);
-// app.use('/task', taskRoute);
 
 if (app.get('env') === 'development') {
     // app.use('/simpledb', simpleDbRoute);

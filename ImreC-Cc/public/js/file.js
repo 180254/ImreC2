@@ -1,5 +1,5 @@
 'use strict';
-/* global initMeta, initCheckboxChanges */
+/* global initMeta, initCheckboxChanges, updateTaskInfo */
 
 var removeLoader = function () {
     $('#not-yet').remove();
@@ -33,9 +33,11 @@ var initFiles = function () {
     $.get(metaUrl, function (data) {
         removeLoader();
 
-        data.forEach(function (file) {
-            initFile(file.name, file.url);
-        });
+        for (var i = 0; i < data.length; i++) {
+            initFile(data[i].name, data[i].url);
+        }
+
+        updateTaskInfo();
     });
 };
 
