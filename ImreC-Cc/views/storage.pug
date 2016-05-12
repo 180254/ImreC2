@@ -27,7 +27,8 @@ block content
     table(id="file-table" class="table table-striped padding-top")
         thead
             tr
-                th(class="col-xs-1 middle") &nbsp;
+                th(class="col-xs-1 middle")
+                    input(type="checkbox" id="files-all-check")
                 th(class="col-xs-1 middle") Collector
                 th(class="col-xs-1 middle") Worker
                 th(class="col-xs-8 middle") URL
@@ -43,3 +44,26 @@ block content
                         span='?'
                     td
                         a(href=encodeURI(file.url))=file.name
+
+    h3='Tasks'
+
+    p.
+        The only available task is rescaling.#[br]
+        Supported&nbsp;image&nbsp;types: .png,&nbsp;.jpg,&nbsp;.bmp#[br]
+        Supported&nbsp;scale&nbsp;range: from&nbsp;1%&nbsp;to&nbsp;200%
+
+    form(class="form-horizontal padding-top")
+        div(class="form-group")
+            span(class="col-md-3 control-label") Selected images
+            div(class="col-md-3")
+                span(id="scale-images" class="form-control") None
+
+        div(class="form-group")
+            label(for="scale-task" class="col-md-3 control-label") Requested scale (%)
+            div(class="col-md-3")
+                input(type="text" id="scale-task" name="scale-task" class="slider form-control"
+                data-slider-min="1" data-slider-max="200" data-slider-step="1" data-slider-value="75")
+
+        div(class="form-group")
+            div(class="col-md-offset-3 col-md-3")
+                input(type="submit" name="submit" value="Schedule that task" class="form-control")

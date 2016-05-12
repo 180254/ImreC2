@@ -19,7 +19,17 @@
 }
 
 .padding-top {
-    padding-top: 1em;
+    padding-top: 1.3em;
+}
+
+/* ********************************************************************* */
+
+.slider {
+    width: 100% !important;
+}
+
+#scale-images {
+    background-color: gainsboro;
 }
 
 /* ********************************************************************* */

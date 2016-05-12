@@ -2,6 +2,12 @@
 
 $(function () {
 
+    $('.slider').bootstrapSlider({
+        tooltip: 'always'
+    });
+
+    /* ****************************************************************************** */
+
     var initHideAble = function ($elem) {
         $elem.click(function () {
             $elem.slideUp('slow');
