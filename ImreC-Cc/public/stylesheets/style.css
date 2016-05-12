@@ -91,3 +91,46 @@
     text-align: right;
     opacity: 0;
 }
+
+/* ********************************************************************* */
+
+/* source: http://www.w3schools.com/howto/howto_css_loader.asp */
+.loader {
+    border: 16px solid #f3f3f3;
+    border-top: 16px solid #3498db;
+    border-radius: 50%;
+
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* source: http://stackoverflow.com/questions/6256043/css-position-loading-indicator-in-the-center-of-the-screen */
+.busy-holder {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    height: 100%;
+    width: 100%;
+    background: #333;
+    opacity: 0.4;
+}
+
+.busy {
+    position: fixed;
+    top: 35%;
+    left: calc(50% - 75px);
+    z-index: 1000;
+    height: 150px;
+    width: 150px;
+}
+
+

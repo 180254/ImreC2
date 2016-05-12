@@ -1,6 +1,17 @@
 extends layout.pug
 
+block script
+    script(src="/javascripts/slider.js")
+    script(src="/javascripts/meta.js")
+    script(src="/javascripts/file.js")
+    script(src="/javascripts/s3form.js")
+    script(src="/javascripts/checkbox.js")
+
+
 block content
+    div(id="not-yet" class="busy-holder")
+        div(class="loader busy")
+
     h3='Storage ' + id
     table(class="table table-striped padding-top")
         tr
@@ -56,16 +67,15 @@ block content
                 th(class="col-xs-8 middle") URL
 
         tbody(id="file-list")
-            each file in files
-                tr
-                    td
-                        input(type="checkbox" name="files" class="files-check" value=file.name)
-                    td
-                        span='?'
-                    td
-                        span='?'
-                    td
-                        a(href=encodeURI(file.url))=file.name
+            tr(class="hidden")
+                td
+                    input(type="checkbox" name="files" class="files-check" value="")
+                td
+                    span='?'
+                td
+                    span='?'
+                td
+                    a(href="")=""
 
     p
         a(href="#" class="reload") Refresh (#[b F5]).#[br]

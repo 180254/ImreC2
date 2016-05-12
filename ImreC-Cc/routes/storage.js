@@ -10,12 +10,11 @@ var s3Form = require('../ractions/s3form');
 router.get('/', function (req, res, next) {
     var id = req.query.id;
 
-    storage.getFiles(id, function (err, files) {
+    storage.getInfo(id, function (err) {
         if (err) res.redirect('/?a=noSuchStorage');
 
         else {
             var renderParams = {
-                files: files,
                 id: id,
                 url: common.domainUrl(req) + '/s?id=' + id,
                 s3form: s3Form.getS3Form(req, id)
@@ -48,6 +47,21 @@ router.get('/meta', function (req, res, next) {
         else {
             res.contentType('application/json');
             res.send(JSON.stringify(meta));
+        }
+    })
+});
+
+router.get('/file', function (req, res, next) {
+    var storageId = req.query.s;
+
+    storage.getFiles(storageId, function (err, files) {
+        if (err) {
+            res.status(404);
+            res.send('');
+        }
+        else {
+            res.contentType('application/json');
+            res.send(JSON.stringify(files));
         }
     })
 });

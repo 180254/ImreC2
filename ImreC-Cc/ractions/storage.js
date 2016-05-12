@@ -8,6 +8,18 @@ var common = require('../utils/common');
 
 // *********************************************************************************************
 
+var getInfo = function (storageId, callback) {
+    var params = {
+        Bucket: aws.conf().S3.Name,
+        Key: storageId + '/' + INFO_JSON
+    };
+
+    aws.s3().headObject(params, function (err, data) {
+        if (err) callback(err.stack);
+        else callback(null);
+    });
+};
+
 var newStorage = function (callback) {
     var storageId = common.random2(STORAGE_ID_LEN);
 
@@ -83,6 +95,7 @@ var getMeta = function (storage, fileName, callback) {
 
 // *********************************************************************************************
 
+exports.getInfo = getInfo;
 exports.newStorage = newStorage;
 exports.getFiles = getFiles;
 exports.getMeta = getMeta;

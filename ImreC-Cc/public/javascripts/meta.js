@@ -16,13 +16,3 @@ var initMeta = function (fileRow) {
         $(cols.get(2)).html(data.worker);
     });
 };
-
-$(function () {
-
-    $('#file-table')
-        .find('tbody')
-        .find('tr')
-        .each(function () {
-            initMeta($(this));
-        });
-});

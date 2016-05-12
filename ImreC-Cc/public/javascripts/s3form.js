@@ -7,11 +7,6 @@ var initHideAble = function ($elem) {
 };
 
 $(function () {
-    var $fileTable = $('#file-table');
-    if ($('#file-list').find('tr').length === 0) {
-        $fileTable.addClass('hidden')
-    }
-
     var $form = $('#s3form');
 
     //noinspection JSUnusedGlobalSymbols
@@ -77,37 +72,12 @@ $(function () {
                 if ($fileList.find('a:contains("' + file.name + '")').length !== 0)
                     return;
 
-                var $fileTable = $('#file-table');
-                if ($fileTable.hasClass('hidden'))
-                    $fileTable.removeClass('hidden');
-
                 var url = $form.attr('action');
                 var key = $form.find("input[name='key']");
                 var fullUrl = url + '/' + key;
 
-                var $input = $('<input/>', {
-                    type: 'checkbox',
-                    name: 'files',
-                    class: 'files-check',
-                    value: file.name
-                });
-                var $url = $('<a/>', {
-                    href: encodeURI(fullUrl)
-                }).html(file.name);
-
-                var $tr = $('<tr/>').append(
-                    $('<td/>').append($input)
-                ).append(
-                    $('<td/>').append($('<span/>').html('?'))
-                ).append(
-                    $('<td/>').append($('<span/>').html('?'))
-                ).append(
-                    $('<td/>').append($url)
-                );
-
-                $fileList.append($tr);
                 //noinspection Eslint
-                initMeta($tr);
+                initFile(file.name, fullUrl);
             });
         }
     });

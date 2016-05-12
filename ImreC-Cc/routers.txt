@@ -1,0 +1,9 @@
+/
+?a=error
+?a=noSuchStorage
+
+/s/new
+/s?id=STORAGE_ID
+
+/s/meta?s=STORAGE_ID&f=FILE_ID
+/s/file?s=STORAGE_ID
