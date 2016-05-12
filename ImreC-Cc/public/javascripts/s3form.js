@@ -1,18 +1,20 @@
 'use strict';
 
+var initHideAble = function ($elem) {
+    $elem.click(function () {
+        $elem.slideUp('slow');
+    })
+};
+
 $(function () {
-
-    var initHideAble = function ($elem) {
-        $elem.click(function () {
-            $elem.slideUp('slow');
-        })
-    };
-
+    var $fileTable = $('#file-table');
     if ($('#file-list').find('tr').length === 0) {
-        $('#file-table').addClass('hidden')
+        $fileTable.addClass('hidden')
     }
 
     var $form = $('#s3form');
+
+    //noinspection JSUnusedGlobalSymbols
     $form.fileupload({
         url: $form.attr('action'),
         type: $form.attr('method'),
@@ -67,7 +69,7 @@ $(function () {
             });
         },
 
-        done: function (event, data, x) {
+        done: function (event, data) {
             data.files.forEach(function (file) {
                 $('.progress[data-file="' + file.name + '"]').slideUp('slow');
 
@@ -104,7 +106,10 @@ $(function () {
                 );
 
                 $fileList.append($tr);
+                //noinspection Eslint
+                initMeta($tr);
             });
         }
     });
+
 });

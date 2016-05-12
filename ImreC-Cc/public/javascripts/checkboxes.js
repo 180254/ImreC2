@@ -1,10 +1,9 @@
 'use strict';
 
 $(function () {
-
     $('input[type="checkbox"]').prop('checked', false);
 
-    $('#files-check-all').change(function (e) {
+    $('#files-check-all').change(function () {
         var checked = $('#files-check-all').is(':checked');
         $('.files-check').prop('checked', checked);
 
@@ -16,5 +15,4 @@ $(function () {
 
         $('#scale-images').html(selectedFilesNames);
     });
-
 });

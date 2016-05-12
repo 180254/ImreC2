@@ -20,7 +20,7 @@ var newStorage = function (callback) {
     };
 
     aws.s3().upload(params, function (err, data) {
-        if (err) callback(err);
+        if (err) callback(err, null);
         else callback(null, storageId);
     });
 
@@ -35,7 +35,7 @@ var getFiles = function (id, callback) {
     };
 
     aws.s3().listObjectsV2(params, function (err, data) {
-        if (err) callback(err);
+        if (err) callback(err, null);
 
         else {
             var infoFile = false;
@@ -61,7 +61,7 @@ var getFiles = function (id, callback) {
                 return false;
             });
 
-            if (!infoFile) callback('no such bucket with INFO_JSON file');
+            if (!infoFile) callback('no such bucket with INFO_JSON file', null);
             else callback(null, files);
         }
     });
@@ -69,15 +69,15 @@ var getFiles = function (id, callback) {
 
 // *********************************************************************************************
 
-var getMeta = function (bucket, key, callback) {
+var getMeta = function (storage, fileName, callback) {
     var params = {
-        Bucket: bucket,
-        Key: key
+        Bucket: aws.conf().S3.Name,
+        Key: storage + '/' + fileName
     };
 
     aws.s3().headObject(params, function (err, data) {
-        if (err) callback(err.stack);
-        else callback(data.Metadata);
+        if (err) callback(err.stack, null);
+        else callback(null, data.Metadata);
     });
 };
 
@@ -85,3 +85,4 @@ var getMeta = function (bucket, key, callback) {
 
 exports.newStorage = newStorage;
 exports.getFiles = getFiles;
+exports.getMeta = getMeta;
