@@ -12,7 +12,6 @@ var initMeta = function (fileRow) {
 
     //noinspection NodeModulesDependencies
     $.get(metaUrl, function (data) {
-        console.log(data);
         $(cols.get(1)).html(data.collector);
         $(cols.get(2)).html(data.worker);
     });
