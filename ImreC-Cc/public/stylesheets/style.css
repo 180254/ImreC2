@@ -22,6 +22,10 @@
     padding-top: 1.3em;
 }
 
+.padding-bottom-end {
+    padding-bottom: 10em;
+}
+
 /* ********************************************************************* */
 
 .slider {
@@ -30,6 +34,23 @@
 
 #scale-images {
     background-color: gainsboro;
+    min-width: 100%;
+    min-height: 7em;
+}
+
+::-webkit-scrollbar {
+    height: 12px;
+    width: 12px;
+    background: gainsboro;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #807F74;
+    -webkit-border-radius: 1px;
+}
+
+::-webkit-scrollbar-corner {
+    background: gainsboro;
 }
 
 /* ********************************************************************* */

@@ -2,12 +2,6 @@
 
 $(function () {
 
-    $('.slider').bootstrapSlider({
-        tooltip: 'always'
-    });
-
-    /* ****************************************************************************** */
-
     var initHideAble = function ($elem) {
         $elem.click(function () {
             $elem.slideUp('slow');
@@ -91,7 +85,8 @@ $(function () {
 
                 var $input = $('<input/>', {
                     type: 'checkbox',
-                    'name': 'files',
+                    name: 'files',
+                    class: 'files-check',
                     value: file.name
                 });
                 var $url = $('<a/>', {
