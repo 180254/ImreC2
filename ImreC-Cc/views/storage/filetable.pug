@@ -1,0 +1,19 @@
+table(id="file-table" class="table table-striped padding-top")
+    thead
+        tr
+            th(class="col-xs-1 middle")
+                input(type="checkbox" id="files-check-all")
+            th(class="col-xs-1 middle") Collector
+            th(class="col-xs-1 middle") Worker
+            th(class="col-xs-8 middle") URL
+
+    tbody(id="file-list")
+        tr(class="hidden")
+            td
+                input(type="checkbox" name="files" class="files-check" value="")
+            td
+                span='?'
+            td
+                span='?'
+            td
+                a(href="")=""

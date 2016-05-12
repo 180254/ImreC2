@@ -5,4 +5,8 @@ $(function () {
         location.reload();
     });
 
+    $('.slider').bootstrapSlider({
+        tooltip: 'always'
+    });
+
 });

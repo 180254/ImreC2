@@ -1,90 +1,34 @@
 extends layout.pug
 
 block script
-    script(src="/js/slider.js")
     script(src="/js/task.js")
     script(src="/js/checkbox.js")
     script(src="/js/meta.js")
     script(src="/js/file.js")
     script(src="/js/s3form.js")
 
-
 block content
     div(id="not-yet" class="busy-holder")
         div(class="loader busy")
 
     h3='Storage ' + id
-    p Refresh (#[b F5]) to obtain newest task state.
 
-    table(class="table table-striped padding-top")
-        tr
-            td(class="col-xs-1 middle") Storage ID
-            td(class="breakable" id="storage-id")=id
-        tr
-            td(class="col-xs-2 middle") Storage URL
-            td
-                a(href=encodeURI(url) class="breakable")=url
-        tr
-            td(class="col-xs-1 middle") Task
-            td(id="info-task")='?'
-        tr
-            td(class="col-xs-1 middle") Percent done
-            td(id="info-task-percent")='?'
-
+    if isTask
+        p Refresh (#[b F5]) to obtain newest task state.
     unless isTask
-        h3='Tasks'
-        p.
-            The only available task is rescaling.#[br]
-            Supported&nbsp;image&nbsp;types: .png,&nbsp;.jpg,&nbsp;.bmp#[br]
-            Supported&nbsp;scale&nbsp;range: from&nbsp;1%&nbsp;to&nbsp;200%
+        p Welcome in storage!
 
-        form(class="form-horizontal padding-top")
-            div(class="form-group")
-                span(class="col-md-3 control-label") Selected images
-                div(class="col-md-3")
-                    textarea(id="scale-images" class="form-control" readonly="readonly" rows="4") None
-
-            div(class="form-group")
-                label(for="scale-info" class="col-md-3 control-label") Requested scale (%)
-                div(class="col-md-3")
-                    input(type="text" id="scale-info" name="scale-info" class="slider form-control"
-                    data-slider-min="1" data-slider-max="200" data-slider-step="1" data-slider-value="75")
-
-            div(class="form-group")
-                div(class="col-md-offset-3 col-md-3")
-                    input(type="submit" name="submit" value="Schedule that info" class="form-control")
+    include storage/headTable.pug
 
     h3='Files'
 
     unless isTask
-        form(action=s3form.url method="post" enctype="multipart/form-data" id="s3form")
-            each key in s3form.s3fields
-                input(type="hidden" name=key.name value=key.value)
+        include storage/uploadForm.pug
 
-            span(class="btn btn-default btn-file") just #[b ADD] some new #[b FILES]
-                input(type="file" name="file" id="file" required="required" multiple="multiple")
-        div(class="progress-bar-area padding-top")
+    include storage/fileTable.pug
 
-    table(id="file-table" class="table table-striped padding-top")
-        thead
-            tr
-                th(class="col-xs-1 middle")
-                    input(type="checkbox" id="files-check-all")
-                th(class="col-xs-1 middle") Collector
-                th(class="col-xs-1 middle") Worker
-                th(class="col-xs-8 middle") URL
-
-        tbody(id="file-list")
-            tr(class="hidden")
-                td
-                    input(type="checkbox" name="files" class="files-check" value="")
-                td
-                    span='?'
-                td
-                    span='?'
-                td
-                    a(href="")=""
-
+    unless isTask
+        include storage/tasksPart.pug
     p
         a(href="#" class="reload") Refresh (#[b F5]).#[br]
         a(href="/") Go back.

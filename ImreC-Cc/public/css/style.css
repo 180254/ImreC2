@@ -94,7 +94,6 @@
 
 /* ********************************************************************* */
 
-/* source: http://www.w3schools.com/howto/howto_css_loader.asp */
 .loader {
     border: 16px solid #f3f3f3;
     border-top: 16px solid #3498db;
@@ -112,7 +111,6 @@
     }
 }
 
-/* source: http://stackoverflow.com/questions/6256043/css-position-loading-indicator-in-the-center-of-the-screen */
 .busy-holder {
     position: fixed;
     top: 0;

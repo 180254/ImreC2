@@ -1,0 +1,14 @@
+table(class="table table-striped padding-top")
+    tr
+        td(class="col-xs-1 middle") Storage ID
+        td(class="breakable" id="storage-id")=id
+    tr
+        td(class="col-xs-2 middle") Storage URL
+        td
+            a(href=encodeURI(url) class="breakable")=url
+    tr
+        td(class="col-xs-1 middle") Task
+        td(id="info-task")='?'
+    tr
+        td(class="col-xs-1 middle") Percent done
+        td(id="info-task-percent")='?'

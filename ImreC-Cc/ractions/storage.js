@@ -6,8 +6,6 @@ var INFO_JSON = '__info.json';
 var aws = require('../utils/aws');
 var common = require('../utils/common');
 
-// *********************************************************************************************
-
 var getTask = function (storage, callback) {
     var params = {
         Bucket: aws.conf().S3.Name,
@@ -19,8 +17,6 @@ var getTask = function (storage, callback) {
         else callback(null, data.Body.toString());
     });
 };
-
-// *********************************************************************************************
 
 var getInfo = function (storageId, callback) {
     getTask(storageId, function (err, task) {
@@ -52,8 +48,6 @@ var newStorage = function (callback) {
     });
 
 };
-
-// *********************************************************************************************
 
 var getFiles = function (id, callback) {
     var params = {
@@ -88,13 +82,11 @@ var getFiles = function (id, callback) {
                 return false;
             });
 
-            if (!infoFile) callback('no such bucket with INFO_JSON file', null);
+            if (!infoFile) callback('INFO_JSON err', null);
             else callback(null, files);
         }
     });
 };
-
-// *********************************************************************************************
 
 var getMeta = function (storage, fileName, callback) {
     var params = {
@@ -107,9 +99,6 @@ var getMeta = function (storage, fileName, callback) {
         else callback(null, data.Metadata);
     });
 };
-
-
-// *********************************************************************************************
 
 exports.getInfo = getInfo;
 exports.newStorage = newStorage;
