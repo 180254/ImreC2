@@ -2,7 +2,7 @@
 
 var aws = require('./utils/aws');
 
-var actionRemaining = 2; // set number of task to bo done on start!
+var actionRemaining = 2; // set number of comm to bo done on start!
 var callbackFunc = null;
 
 var checkStartDone = function () {

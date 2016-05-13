@@ -9,9 +9,8 @@ var bodyParser = require('body-parser');
 
 var indexRoute = require('./routes/index');
 var storageRoute = require('./routes/storage');
+var commRoute = require('./routes/comm');
 
-// var s3formRoute = require('./routes/s3form');
-// var taskRoute = require('./routes/task');
 // var simpleDbRoute = require('./routes/simpledb');
 
 var app = express();
@@ -30,6 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRoute);
 app.use('/s', storageRoute);
+app.use('/c', commRoute);
 
 if (app.get('env') === 'development') {
     // app.use('/simpledb', simpleDbRoute);

@@ -23,7 +23,7 @@
 }
 
 .padding-bottom-end {
-    padding-bottom: 10em;
+    padding-bottom: 5em;
 }
 
 /* ********************************************************************* */
@@ -131,4 +131,10 @@
     width: 150px;
 }
 
+/* ********************************************************************* */
 
+.scheduled {
+    font-size: 1.5em;
+    color: darkblue;
+    font-family: Impact, Charcoal, sans-serif;
+}

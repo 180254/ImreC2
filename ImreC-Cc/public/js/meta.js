@@ -17,5 +17,8 @@ var initMeta = function (fileRow) {
     $.get(metaUrl, function (data) {
         $(cols.get(1)).html(data.collector);
         $(cols.get(2)).html(data.worker);
+
+    }).fail(function () {
+        alert('Something go wrong. Try reload page.');
     });
 };

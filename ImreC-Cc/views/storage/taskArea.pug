@@ -1,4 +1,4 @@
-h3='Tasks'
+h3='Task(s)'
 p.
     The only available task is rescaling.#[br]
     Supported&nbsp;image&nbsp;types: .png,&nbsp;.jpg,&nbsp;.bmp#[br]
@@ -18,4 +18,9 @@ form(class="form-horizontal padding-top")
 
     div(class="form-group")
         div(class="col-md-offset-3 col-md-3")
-            input(type="submit" name="submit" value="Schedule that info" class="form-control")
+            input(type="button" name="submit" value="Schedule a task" class="form-control" d
+            id="schedule-button" disabled="disabled")
+
+pre(id="scheduled-p" class="scheduled hidden")
+    span Scheduled! Storage assigned to task:#[br]
+    a(id="scheduled-a" href="http://google.pl" target="_blank") http://google.pl

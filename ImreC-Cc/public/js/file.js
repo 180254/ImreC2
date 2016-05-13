@@ -1,9 +1,5 @@
 'use strict';
-/* global initMeta, initCheckboxChanges, updateTaskInfo */
-
-var removeLoader = function () {
-    $('#not-yet').remove();
-};
+/* global initMeta, initCheckboxChanges, updateComm, removeLoader */
 
 var initFile = function (name, url) {
     var $table = $('#file-table').find('tbody');
@@ -37,7 +33,10 @@ var initFiles = function () {
             initFile(data[i].name, data[i].url);
         }
 
-        updateTaskInfo();
+        updateComm();
+
+    }).fail(function () {
+        alert('Something go wrong. Try reload page.');
     });
 };
 

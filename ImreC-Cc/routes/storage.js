@@ -27,12 +27,9 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/new', function (req, res, next) {
-    storage.newStorage(function (err, id) {
 
-        if (err) {
-            console.log(err);
-            res.redirect('/?a=error');
-        }
+    storage.newStorage(null, function (err, id) {
+        if (err) res.redirect('/?a=error');
         else res.redirect('/s?id=' + id);
     })
 });
@@ -42,10 +39,8 @@ router.get('/meta', function (req, res, next) {
     var fileName = req.query.f;
 
     storage.getMeta(storageId, fileName, function (err, meta) {
-        if (err) {
-            res.status(404);
-            res.send('');
-        }
+        if (err) res.sendStatus(404);
+        
         else {
             res.contentType('application/json');
             res.send(JSON.stringify(meta));
@@ -57,10 +52,8 @@ router.get('/file', function (req, res, next) {
     var storageId = req.query.s;
 
     storage.getFiles(storageId, function (err, files) {
-        if (err) {
-            res.status(404);
-            res.send('');
-        }
+        if (err) res.sendStatus(404);
+        
         else {
             res.contentType('application/json');
             res.send(JSON.stringify(files));
@@ -68,17 +61,15 @@ router.get('/file', function (req, res, next) {
     })
 });
 
-router.get('/task', function (req, res, next) {
+router.get('/comm', function (req, res, next) {
     var storageId = req.query.s;
 
-    storage.getTask(storageId, function (err, task) {
-        if (err) {
-            res.status(404);
-            res.send('');
-        }
+    storage.getComm(storageId, function (err, comm) {
+        if (err) res.sendStatus(404);
+        
         else {
             res.contentType('application/json');
-            res.send(JSON.stringify(task));
+            res.send(JSON.stringify(comm));
         }
     })
 });

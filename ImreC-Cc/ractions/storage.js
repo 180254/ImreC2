@@ -6,7 +6,7 @@ var INFO_JSON = '__info.json';
 var aws = require('../utils/aws');
 var common = require('../utils/common');
 
-var getTask = function (storage, callback) {
+var getComm = function (storage, callback) {
     var params = {
         Bucket: aws.conf().S3.Name,
         Key: storage + '/' + INFO_JSON
@@ -19,7 +19,7 @@ var getTask = function (storage, callback) {
 };
 
 var getInfo = function (storageId, callback) {
-    getTask(storageId, function (err, task) {
+    getComm(storageId, function (err, task) {
         if (err) callback(err, null);
 
         else {
@@ -30,14 +30,14 @@ var getInfo = function (storageId, callback) {
     });
 };
 
-var newStorage = function (callback) {
+var newStorage = function (comm, callback) {
     var storageId = common.random2(STORAGE_ID_LEN);
 
     var params = {
         Bucket: aws.conf().S3.Name,
         Key: storageId + '/' + INFO_JSON,
         ACL: 'private',
-        Body: JSON.stringify({ task: null, files: null }),
+        Body: JSON.stringify(comm || { task: null, files: null }),
         // Body: JSON.stringify({ task: { scale: 70 }, files: 10 }),
         ContentType: 'application/json'
     };
@@ -66,6 +66,7 @@ var getFiles = function (id, callback) {
             data.Contents.some(function (entry) {
                 var fileName = entry.Key.replace(/^([a-zA-Z0-9]+\/)(.*)/, '$2');
 
+                // block asking about too shorts id (example id = "a", prefix probably will be found)
                 if ((id + '/' + fileName) !== entry.Key) {
                     infoFile = false;
                     return true;
@@ -104,5 +105,5 @@ exports.getInfo = getInfo;
 exports.newStorage = newStorage;
 exports.getFiles = getFiles;
 exports.getMeta = getMeta;
-exports.getTask = getTask;
+exports.getComm = getComm;
 

@@ -1,7 +1,7 @@
 extends layout.pug
 
 block script
-    script(src="/js/task.js")
+    script(src="/js/comm.js")
     script(src="/js/checkbox.js")
     script(src="/js/meta.js")
     script(src="/js/file.js")
@@ -28,8 +28,9 @@ block content
     include storage/fileTable.pug
 
     unless isTask
-        include storage/tasksPart.pug
-    p
+        include storage/taskArea.pug
+
+    p(class="padding-top")
         a(href="#" class="reload") Refresh (#[b F5]).#[br]
         a(href="/") Go back.
 
