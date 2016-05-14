@@ -21,7 +21,9 @@ form(class="form-horizontal padding-top")
             input(type="button" name="submit" value="Schedule a task" class="form-control" d
             id="schedule-button" disabled="disabled")
 
-p(id="scheduled-p" class="scheduled hidden")
-    span="Scheduled! "
-    span Storage assigned to task:#[br]
-    a(id="scheduled-a" href="http://google.pl" target="_blank") http://google.pl
+table(id="scheduled-t" class="table table-striped padding-top")
+    tr(class="hidden")
+        td(class="col-xs-2 middle")
+            span="scale=70%; files=4"
+        td(class="col-xs-8 middle")
+            a(class="scheduled-a" href="http://google.pl" target="_blank") http://google.pl

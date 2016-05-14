@@ -41,15 +41,13 @@ var onScheduleButton = function () {
 
     }).done(function (data) {
         var storageUrl = data.storageUrl;
-        var $scheduledA = $('#scheduled-a');
-        var $scheduledP = $('#scheduled-p');
+        var $scheduledT = $('#scheduled-t');
+        var scheduledRow = $scheduledT.find('tr:first').clone();
 
-        $scheduledA.attr('href', storageUrl).html(encodeURI(storageUrl));
-        $scheduledP.removeClass('hidden').focus();
+        scheduledRow.find('span').html('scale=' + param.task.scale + '%; files=' + param.filesArr.length);
+        scheduledRow.find('a').attr('href', storageUrl).html(encodeURI(storageUrl));
+        scheduledRow.removeClass('hidden').appendTo($scheduledT);
         $('#schedule-button').blur();
-
-        //noinspection JSValidateTypes
-        $(window).scrollTop($scheduledA.offset().top)
 
     }).fail(function () {
         alert('Something go wrong. Try reload page.');
