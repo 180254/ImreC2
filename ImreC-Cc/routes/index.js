@@ -5,7 +5,7 @@ var router = express.Router();
 
 var selfIp = require('../utils/selfIp');
 
-router.get('/', function (req, res, next) {
+router.get('/', function (req, res) {
 
     var options = {
         ip: selfIp.ip(),

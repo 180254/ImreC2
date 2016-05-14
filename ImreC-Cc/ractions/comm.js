@@ -26,7 +26,7 @@ var scheduleCheckedComm = function (comm, storageId2) {
             QueueUrl: aws.conf().Sqs.Url
         };
 
-        aws.sqs().sendMessage(params, function (err, data) {
+        aws.sqs().sendMessage(params, function (err) {
             if (err) console.log(err.stack);
             else console.log(params.MessageBody);
         });
@@ -57,7 +57,7 @@ var addSubCommToStorage = function (comm, subStorageId) {
             ContentType: 'application/json'
         };
 
-        aws.s3().upload(params, function (err, data) {
+        aws.s3().upload(params, function (err) {
             if (err) console.log(err.stack);
             else console.log(params.Body);
         });

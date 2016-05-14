@@ -6,7 +6,7 @@ var router = express.Router();
 var common = require('../utils/common');
 var comm = require('../ractions/comm');
 
-router.post('/new', function (req, res, next) {
+router.post('/new', function (req, res) {
 
     comm.scheduleComm(req.body, function (err, storageId) {
         if (err) res.sendStatus(400);

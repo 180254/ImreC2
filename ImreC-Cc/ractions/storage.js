@@ -41,7 +41,7 @@ var newStorage = function (comm, callback) {
         ContentType: 'application/json'
     };
 
-    aws.s3().upload(params, function (err, data) {
+    aws.s3().upload(params, function (err) {
         if (err) callback(err, null);
         else callback(null, storageId);
     });

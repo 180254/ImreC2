@@ -7,7 +7,7 @@ var common = require('../utils/common');
 var storage = require('../ractions/storage');
 var s3Form = require('../ractions/s3form');
 
-router.get('/', function (req, res, next) {
+router.get('/', function (req, res) {
     var id = req.query.id;
 
     storage.getInfo(id, function (err, isTask) {
@@ -26,7 +26,7 @@ router.get('/', function (req, res, next) {
     })
 });
 
-router.get('/new', function (req, res, next) {
+router.get('/new', function (req, res) {
 
     storage.newStorage(null, function (err, id) {
         if (err) res.redirect('/?a=error');
@@ -34,7 +34,7 @@ router.get('/new', function (req, res, next) {
     })
 });
 
-router.get('/meta', function (req, res, next) {
+router.get('/meta', function (req, res) {
     var storageId = req.query.s;
     var fileName = req.query.f;
 
@@ -48,7 +48,7 @@ router.get('/meta', function (req, res, next) {
     })
 });
 
-router.get('/file', function (req, res, next) {
+router.get('/file', function (req, res) {
     var storageId = req.query.s;
 
     storage.getFiles(storageId, function (err, files) {
@@ -61,7 +61,7 @@ router.get('/file', function (req, res, next) {
     })
 });
 
-router.get('/comm', function (req, res, next) {
+router.get('/comm', function (req, res) {
     var storageId = req.query.s;
 
     storage.getComm(storageId, function (err, comm) {
