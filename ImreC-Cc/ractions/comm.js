@@ -1,6 +1,7 @@
 'use strict';
 
 var storage = require('./storage');
+var aws = require('../utils/aws');
 
 /*
  * comm =
@@ -11,8 +12,26 @@ var storage = require('./storage');
  * }
  */
 
-var scheduleCheckedComm = function (comm, storageId) {
-    console.log('Executing ' + JSON.stringify(comm) + '/' + storageId);
+var scheduleCheckedComm = function (comm, storageId2) {
+    comm.filesArr.forEach(function (filename) {
+        var message = {
+            storageId1: comm.storageId,
+            storageId2: storageId2,
+            filename: filename,
+            task: comm.task
+        };
+
+        var params = {
+            MessageBody: JSON.stringify(message),
+            QueueUrl: aws.conf().Sqs.Url
+        };
+
+        aws.sqs().sendMessage(params, function (err, data) {
+            if (err) console.log(err.stack);
+            else console.log(params.MessageBody);
+        });
+
+    });
 };
 
 var checkCommIsProper = function (comm, callback) {

@@ -9,6 +9,7 @@ var common = require('./common');
 var AWS = require('aws-sdk');
 var s3Client = null;
 var sdbClient = null;
+var sqsClient = null;
 var confHandler = null;
 
 
@@ -42,6 +43,7 @@ var initAws = function (callback) {
 
         s3Client = new AWS.S3();
         sdbClient = new AWS.SimpleDB();
+        sqsClient = new AWS.SQS();
         callback();
     };
 
@@ -62,6 +64,10 @@ var sdb = function () {
     return sdbClient;
 };
 
+var sqs = function () {
+    return sqsClient;
+};
+
 var conf = function () {
     return confHandler;
 };
@@ -75,6 +81,7 @@ var cred = function () {
 exports.initAws = initAws;
 exports.s3 = s3;
 exports.sdb = sdb;
+exports.sqs = sqs;
 exports.conf = conf;
 exports.cred = cred;
 
