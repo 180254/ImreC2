@@ -25,8 +25,8 @@ var log = function (req, action) {
 
     var uniqueName = common.random2(16);
     var simpleDbParams = {
-        DomainName: aws().conf.Sdb.Domain,
-        ItemName: aws().conf.Sdb.LogItemPrefix + uniqueName,
+        DomainName: aws.conf().Sdb.Domain,
+        ItemName: aws.conf().Sdb.LogItemPrefix + uniqueName,
         Attributes: attributes
     };
 
