@@ -23,8 +23,7 @@ var getInfo = function (storageId, callback) {
         if (err) callback(err, null);
 
         else {
-            var taskObj = task;
-            var isTask = taskObj.task !== null;
+            var isTask = task.task !== null;
             callback(null, isTask);
         }
     });
@@ -37,7 +36,7 @@ var newStorage = function (comm, callback) {
         Bucket: aws.conf().S3.Name,
         Key: storageId + '/' + INFO_JSON,
         ACL: 'private',
-        Body: JSON.stringify(comm || { task: null, files: null }),
+        Body: JSON.stringify(comm || { task: null, files: null, subComm: [] }),
         // Body: JSON.stringify({ task: { scale: 70 }, files: 10 }),
         ContentType: 'application/json'
     };
@@ -101,6 +100,7 @@ var getMeta = function (storage, fileName, callback) {
     });
 };
 
+exports.INFO_JSON = INFO_JSON;
 exports.getInfo = getInfo;
 exports.newStorage = newStorage;
 exports.getFiles = getFiles;

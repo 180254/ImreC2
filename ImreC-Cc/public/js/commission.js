@@ -1,4 +1,5 @@
 'use strict';
+/* global addToScheduledTable */
 
 var getCommission = function (callback) {
     var storageId = $('#storage-id').html();
@@ -31,5 +32,10 @@ var updateCommission = function () {
             var hasPercent = hasFileLen / comm.files * 100;
             $percent.html(hasPercent.toFixed(0) + '%')
         }
+
+        var domainUrl = location.protocol + "//" + location.host;
+        comm.subComm.forEach(function (subComm) {
+            addToScheduledTable(subComm.task.scale, subComm.files, domainUrl + '/s?=' + subComm.storageId);
+        });
     });
 };

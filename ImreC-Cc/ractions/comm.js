@@ -34,6 +34,37 @@ var scheduleCheckedComm = function (comm, storageId2) {
     });
 };
 
+var addSubCommToStorage = function (comm, subStorageId) {
+    var newSubComm = {
+        task: comm.task,
+        files: comm.filesArr.length,
+        storageId: subStorageId
+    };
+
+    storage.getComm(comm.storageId, function (err, baseComm) {
+        if (err) {
+            console.log(err.stack);
+            return;
+        }
+
+        baseComm.subComm.push(newSubComm);
+
+        var params = {
+            Bucket: aws.conf().S3.Name,
+            Key: comm.storageId + '/' + storage.INFO_JSON,
+            ACL: 'private',
+            Body: JSON.stringify(baseComm),
+            ContentType: 'application/json'
+        };
+
+        aws.s3().upload(params, function (err, data) {
+            if (err) console.log(err.stack);
+            else console.log(params.Body);
+        });
+    })
+
+};
+
 var checkCommIsProper = function (comm, callback) {
     if (!Number.isInteger(comm.task.scale)
         || comm.task.scale > 200 || comm.task.scale < 1) {
@@ -68,7 +99,8 @@ var isSubsetOfStorageFiles = function (filesArr, storageId, callback) {
 var createStorageForComm = function (comm, callback) {
     var comm2 = {
         task: { scale: comm.task.scale },
-        files: comm.filesArr.length
+        files: comm.filesArr.length,
+        subComm: []
     };
 
     storage.newStorage(comm2, function (err, storageId) {
@@ -89,6 +121,7 @@ var scheduleComm = function (comm, callback) {
                     if (err) callback(err, null);
                     else {
                         callback(null, storageId);
+                        addSubCommToStorage(comm, storageId);
                         scheduleCheckedComm(comm, storageId);
                     }
                 });

@@ -22,6 +22,15 @@ var initCheckboxChanges = function ($dom) {
     });
 };
 
+var addToScheduledTable = function (scale, files, storageUrl) {
+    var $scheduledT = $('#scheduled-t');
+    var scheduledRow = $scheduledT.find('tr:first').clone();
+
+    scheduledRow.find('span').html('scale=' + scale + '%; files=' + files);
+    scheduledRow.find('a').attr('href', storageUrl).html(encodeURI(storageUrl));
+    scheduledRow.removeClass('hidden').appendTo($scheduledT);
+};
+
 var onScheduleButton = function () {
     addLoader();
 
@@ -40,13 +49,7 @@ var onScheduleButton = function () {
         dataType: 'json'
 
     }).done(function (data) {
-        var storageUrl = data.storageUrl;
-        var $scheduledT = $('#scheduled-t');
-        var scheduledRow = $scheduledT.find('tr:first').clone();
-
-        scheduledRow.find('span').html('scale=' + param.task.scale + '%; files=' + param.filesArr.length);
-        scheduledRow.find('a').attr('href', storageUrl).html(encodeURI(storageUrl));
-        scheduledRow.removeClass('hidden').appendTo($scheduledT);
+        addToScheduledTable(param.task.scale, param.filesArr.length, data.storageUrl);
         $('#schedule-button').blur();
 
     }).fail(function () {
