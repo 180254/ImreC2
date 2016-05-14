@@ -2,7 +2,7 @@
 
 var aws = require('../utils/aws');
 var s3post = require('../utils/s3post');
-var ip = require('../utils/ip');
+var ip = require('../utils/selfIp');
 
 var getS3Form = function (req, storage) {
     var ipCopy = ip.ip();

@@ -134,7 +134,18 @@
 /* ********************************************************************* */
 
 .scheduled {
-    font-size: 1.5em;
+    display: block;
+    padding: 10px;
+    margin: 0 0 10px;
+    line-height: 1.4;
+    color: #333;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1.25em;
+    font-weight: bold;
+}
+
+.scheduled :first-child {
     color: darkblue;
-    font-family: Impact, Charcoal, sans-serif;
 }

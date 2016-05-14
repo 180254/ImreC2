@@ -1,7 +1,7 @@
 'use strict';
-/* global initMeta, initCheckboxChanges, updateComm, removeLoader */
+/* global initMeta, initCheckboxChanges, updateCommission, removeLoader */
 
-var initFile = function (name, url) {
+var initFileRow = function (name, url) {
     var $table = $('#file-table').find('tbody');
 
     var $fileRow = $table.find('>:first-child').clone();
@@ -21,7 +21,7 @@ var initFile = function (name, url) {
     initCheckboxChanges($checkbox);
 };
 
-var initFiles = function () {
+var initFileTable = function () {
     var storageId = $('#storage-id').html();
     var metaUrl = '/s/file/?s=' + encodeURIComponent(storageId);
 
@@ -30,10 +30,10 @@ var initFiles = function () {
         removeLoader();
 
         for (var i = 0; i < data.length; i++) {
-            initFile(data[i].name, data[i].url);
+            initFileRow(data[i].name, data[i].url);
         }
 
-        updateComm();
+        updateCommission();
 
     }).fail(function () {
         alert('Something go wrong. Try reload page.');
@@ -42,5 +42,5 @@ var initFiles = function () {
 
 
 $(function () {
-    initFiles();
+    initFileTable();
 });

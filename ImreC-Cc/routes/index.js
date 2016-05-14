@@ -3,12 +3,12 @@
 var express = require('express');
 var router = express.Router();
 
-var ip = require('../utils/ip');
+var selfIp = require('../utils/selfIp');
 
 router.get('/', function (req, res, next) {
 
     var options = {
-        ip: ip.ip(),
+        ip: selfIp.ip(),
         actionError: req.query.a === 'error',
         noSuchStorage: req.query.a === 'noSuchStorage'
     };

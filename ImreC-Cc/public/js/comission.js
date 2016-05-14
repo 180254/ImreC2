@@ -1,26 +1,26 @@
 'use strict';
 
-var getComm = function (callback) {
+var getCommission = function (callback) {
     var storageId = $('#storage-id').html();
-    var taskUrl = '/s/comm/?s=' + encodeURIComponent(storageId);
+    var commUrl = '/s/comm/?s=' + encodeURIComponent(storageId);
 
     //noinspection NodeModulesDependencies
-    $.get(taskUrl, function (data) {
-        callback(JSON.parse(data));
+    $.get(commUrl, function (data) {
+        callback(data);
     }).fail(function () {
         alert('Something go wrong. Try reload page.');
     });
 };
 
 /* eslint-disable no-unused-vars */
-var updateComm = function () {
+var updateCommission = function () {
     /* eslint-enable no-unused-vars */
 
-    getComm(function (comm) {
-        var $info = $('#info-comm-comm');
+    getCommission(function (comm) {
+        var $info = $('#info-comm-task');
         var $percent = $('#info-comm-percent');
 
-        if (comm.task === null) {
+        if (!comm.task) {
             $info.html('None');
             $percent.html('-');
 

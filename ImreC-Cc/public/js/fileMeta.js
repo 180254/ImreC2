@@ -14,9 +14,9 @@ var initMeta = function (fileRow) {
         + '&f=' + encodeURIComponent(filename);
 
     //noinspection NodeModulesDependencies
-    $.get(metaUrl, function (data) {
-        $(cols.get(1)).html(data.collector);
-        $(cols.get(2)).html(data.worker);
+    $.get(metaUrl, function (meta) {
+        $(cols.get(1)).html(meta.collector);
+        $(cols.get(2)).html(meta.worker);
 
     }).fail(function () {
         alert('Something go wrong. Try reload page.');

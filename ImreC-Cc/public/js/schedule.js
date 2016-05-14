@@ -7,10 +7,10 @@ var getSelectedFileNames = function () {
     });
 };
 
-var updateSelectedFileNames = function () {
+var updateSelectedArea = function () {
     var selectedFilesNames = getSelectedFileNames().join('\n') || 'None';
     $('#schedule-button').prop('disabled', selectedFilesNames === 'None');
-    $('#scale-images').html(selectedFilesNames);
+    $('#selected-area').html(selectedFilesNames);
 };
 
 /* eslint-disable no-unused-vars */
@@ -18,7 +18,7 @@ var initCheckboxChanges = function ($dom) {
     /* eslint-enable no-unused-vars */
 
     $dom.change(function () {
-        updateSelectedFileNames();
+        updateSelectedArea();
     });
 };
 
@@ -47,7 +47,7 @@ var onScheduleButton = function () {
         $scheduledA.attr('href', storageUrl).html(encodeURI(storageUrl));
         $scheduledP.removeClass('hidden').focus();
         $('#schedule-button').blur();
-        
+
         //noinspection JSValidateTypes
         $(window).scrollTop($scheduledA.offset().top)
 
@@ -65,7 +65,7 @@ $(function () {
     $('#files-check-all').change(function () {
         var checked = $('#files-check-all').is(':checked');
         $('.files-check').slice(1).prop('checked', checked);
-        updateSelectedFileNames();
+        updateSelectedArea();
     });
 
     $('#schedule-button').click(

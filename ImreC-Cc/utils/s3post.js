@@ -6,7 +6,7 @@
  */
 
 var moment = require('moment');
-var ciphers = require('./ciphers');
+var ciphers = require('./cipher');
 var common = require('./common');
 
 var ACCESS_KEY_FIELD_NAME = 'AWSAccessKeyId';

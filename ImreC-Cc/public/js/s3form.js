@@ -1,5 +1,5 @@
 'use strict';
-/* global initFile */
+/* global initFileRow */
 
 var initHideAble = function ($elem) {
     $elem.click(function () {
@@ -77,7 +77,7 @@ $(function () {
                 var key = $form.find("input[name='key']");
                 var fullUrl = url + '/' + key;
 
-                initFile(file.name, fullUrl);
+                initFileRow(file.name, fullUrl);
             });
         }
     });

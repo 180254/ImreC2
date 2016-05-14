@@ -14,7 +14,7 @@ var getComm = function (storage, callback) {
 
     aws.s3().getObject(params, function (err, data) {
         if (err) callback(err.stack, null);
-        else callback(null, data.Body.toString());
+        else callback(null, JSON.parse(data.Body.toString()));
     });
 };
 
@@ -23,7 +23,7 @@ var getInfo = function (storageId, callback) {
         if (err) callback(err, null);
 
         else {
-            var taskObj = JSON.parse(task);
+            var taskObj = task;
             var isTask = taskObj.task !== null;
             callback(null, isTask);
         }

@@ -66,7 +66,7 @@ router.get('/comm', function (req, res, next) {
 
     storage.getComm(storageId, function (err, comm) {
         if (err) res.sendStatus(404);
-        
+
         else {
             res.contentType('application/json');
             res.send(JSON.stringify(comm));
