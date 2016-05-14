@@ -2,7 +2,6 @@
 
 var fs = require('fs');
 var crypto = require('crypto');
-var url = require('url');
 
 // credits radamus @ github
 // https://github.com/amgnet-weeia/awslab4

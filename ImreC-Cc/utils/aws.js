@@ -1,6 +1,6 @@
 'use strict';
 
-var tryEC2MetaFirst = false;
+var tryEC2MetaFirst = true;
 
 var CONFIG_FILE = 'config.json';
 var CONF_FILE = 'conf.json';

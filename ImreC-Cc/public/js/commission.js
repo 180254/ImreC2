@@ -13,6 +13,19 @@ var getCommission = function (callback) {
     });
 };
 
+var updateSubCommissions = function (comm) {
+    var domainUrl = location.protocol + '//' + location.host;
+
+    comm.subComm.forEach(function (subComm) {
+        if (subComm.task.scale !== undefined) {
+            addToScheduledTable(
+                subComm.task.scale,
+                subComm.files,
+                domainUrl + '/s?=' + subComm.storageId);
+        }
+    })
+};
+
 /* eslint-disable no-unused-vars */
 var updateCommission = function () {
     /* eslint-enable no-unused-vars */
@@ -33,9 +46,6 @@ var updateCommission = function () {
             $percent.html(hasPercent.toFixed(0) + '%')
         }
 
-        var domainUrl = location.protocol + "//" + location.host;
-        comm.subComm.forEach(function (subComm) {
-            addToScheduledTable(subComm.task.scale, subComm.files, domainUrl + '/s?=' + subComm.storageId);
-        });
+        updateSubCommissions(comm);
     });
 };

@@ -14,10 +14,10 @@ var updateSelectedArea = function () {
 };
 
 /* eslint-disable no-unused-vars */
-var initCheckboxChanges = function ($dom) {
+var initCheckboxChanges = function ($checkboxDom) {
     /* eslint-enable no-unused-vars */
 
-    $dom.change(function () {
+    $checkboxDom.change(function () {
         updateSelectedArea();
     });
 };
