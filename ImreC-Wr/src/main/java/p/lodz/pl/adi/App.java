@@ -3,7 +3,7 @@ package p.lodz.pl.adi;
 import com.amazonaws.services.sqs.model.Message;
 import p.lodz.pl.adi.config.CoProvider;
 import p.lodz.pl.adi.config.Conf;
-import p.lodz.pl.adi.config.Config;
+import p.lodz.pl.adi.config.Config0;
 import p.lodz.pl.adi.utils.AmazonHelper;
 import p.lodz.pl.adi.utils.ExecutorHelper;
 import p.lodz.pl.adi.utils.ImageResizer;
@@ -35,7 +35,7 @@ public class App {
 
     public App() throws IOException {
         Conf conf = CoProvider.getConf();
-        Config config = CoProvider.getConfig();
+        Config0 config = CoProvider.getConfig();
         selfIp = getSelfIp();
 
         am = new AmazonHelper(config, conf);

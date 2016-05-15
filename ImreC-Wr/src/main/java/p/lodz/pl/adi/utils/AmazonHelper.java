@@ -1,6 +1,6 @@
 package p.lodz.pl.adi.utils;
 
-import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.regions.Region;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
@@ -15,7 +15,7 @@ import com.amazonaws.services.sqs.model.*;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import p.lodz.pl.adi.config.Conf;
-import p.lodz.pl.adi.config.Config;
+import p.lodz.pl.adi.config.Config0;
 
 import java.io.InputStream;
 import java.util.Collection;
@@ -34,18 +34,18 @@ public class AmazonHelper {
     private final AmazonSQSAsync sqs;
     private final AmazonSimpleDBAsync sdb;
 
-    public AmazonHelper(Config config, Conf conf) {
-        AWSCredentials awsCredentials = config.awsCredentials();
+    public AmazonHelper(Config0 config, Conf conf) {
+        AWSCredentialsProvider credentials = config.awsCredentials();
+        sqs = new AmazonSQSAsyncClient(credentials);
+        s3 = new AmazonS3Client(credentials);
+        sdb = new AmazonSimpleDBAsyncClient(credentials);
+
         Region awsRegion = config.awsRegion();
-
-        sqs = new AmazonSQSAsyncClient(awsCredentials);
-        sqs.setRegion(awsRegion);
-
-        s3 = new AmazonS3Client(awsCredentials);
-        sqs.setRegion(awsRegion);
-
-        sdb = new AmazonSimpleDBAsyncClient(awsCredentials);
-        sdb.setRegion(awsRegion);
+        if (awsRegion != null) {
+            sqs.setRegion(awsRegion);
+            sqs.setRegion(awsRegion);
+            sdb.setRegion(awsRegion);
+        }
 
         this.conf = conf;
     }
