@@ -12,14 +12,15 @@ var ip = function (req) {
 var log = function (req, action) {
     var attributes = [];
 
-    attributes.push({ Name: 'aSource', Value: 'Cc/' + selfIp.ip() });
-    attributes.push({ Name: 'bDate', Value: currentDateFormatted() });
-    attributes.push({ Name: 'cReqIP', Value: ip(req) });
-    attributes.push({ Name: 'dAction', Value: action });
+    attributes.push({ Name: 'aApp', Value: 'Cc' });
+    attributes.push({ Name: 'bAppInstance', Value: selfIp.ip() });
+    attributes.push({ Name: 'cDate', Value: currentDateFormatted() });
+    attributes.push({ Name: 'dReqIP', Value: ip(req) });
+    attributes.push({ Name: 'eAction', Value: action });
 
     if (arguments.length > 2) {
         for (var i = 2; i < arguments.length; i++) {
-            attributes.push({ Name: 'eArg_' + (i - 2), Value: arguments[i] });
+            attributes.push({ Name: 'fArg_' + (i - 2), Value: arguments[i] });
         }
     }
 

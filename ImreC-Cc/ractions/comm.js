@@ -31,12 +31,10 @@ var scheduleCheckedComm = function (comm, storageId2) {
             if (err) {
                 logger.log(null, 'CC_R_ACTION_ERR', 'scheduleCheckedComm.sendMessage', err.stack);
                 console.log(err.stack);
+            } else {
+                logger.log(null, 'CC_COMM_SCHEDULED', JSON.stringify(message));
             }
-
-            else console.log(params.MessageBody);
         });
-
-        logger.log(null, 'CC_COMM_SCHEDULED', JSON.stringify(message));
     });
 };
 
@@ -68,7 +66,6 @@ var addSubCommToStorage = function (comm, subStorageId) {
                 logger.log(null, 'CC_R_ACTION_ERR', 'addSubCommToStorage.upload', err.stack);
                 console.log(err.stack);
             }
-            else console.log(params.Body);
         });
     })
 
