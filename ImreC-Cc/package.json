@@ -14,6 +14,7 @@
     "external-ip": "^0.2.4",
     "moment": "^2.13.0",
     "morgan": "^1.7.0",
+    "node-rest-client": "^1.8.0",
     "pug": "^2.0.0-alpha7",
     "serve-favicon": "^2.3.0"
   }

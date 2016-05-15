@@ -5,6 +5,8 @@ var tryEC2MetaFirst = true;
 var CONFIG_FILE = 'config.json';
 var CONF_FILE = 'conf.json';
 
+var Client = require('node-rest-client').Client;
+
 var common = require('./common');
 var AWS = require('aws-sdk');
 var s3Client = null;
@@ -12,6 +14,32 @@ var sdbClient = null;
 var sqsClient = null;
 var confHandler = null;
 
+// *********************************************************************************************
+
+var configFromJson = function (callback) {
+    AWS.config.loadFromPath(CONFIG_FILE);
+    callback();
+};
+
+var configFromJson2 = function (callback) {
+    console.log('Unable to get credentials from ec2 metadata. '
+        + CONFIG_FILE + ' will be used.');
+    configFromJson(callback);
+};
+
+// *********************************************************************************************
+
+var getRegionFromEC2 = function (callback) {
+    var client = new Client();
+    client.get('http://169.254.169.254/latest/meta-data/placement/availability-zone',
+        function (data, response) {
+            var region1 = response.slice(0, -1);
+            AWS.config.update({ region: region1 });
+        })
+        .on('error', function () {
+            configFromJson(callback);
+        });
+};
 
 // *********************************************************************************************
 
@@ -19,21 +47,11 @@ var configFromEC2Meta = function (callback) {
     var EC2MCred = new AWS.EC2MetadataCredentials();
 
     EC2MCred.refresh(function (err) {
-        if (err) {
-            console.log('Unable to get credentials from ec2 metadata. '
-                + CONFIG_FILE + ' will be used.');
-            configFromJson(callback);
-        }
-        else callback(err);
+        if (err) configFromJson2(callback);
+        else getRegionFromEC2(callback);
     })
 };
 
-// *********************************************************************************************
-
-var configFromJson = function (callback) {
-    AWS.config.loadFromPath(CONFIG_FILE);
-    callback();
-};
 
 // *********************************************************************************************
 
