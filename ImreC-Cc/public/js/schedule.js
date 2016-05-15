@@ -27,7 +27,7 @@ var addToScheduledTable = function (scale, files, storageUrl) {
     var scheduledRow = $scheduledT.find('tr:first').clone();
 
     scheduledRow.find('span').html('scale=' + scale + '%; files=' + files);
-    scheduledRow.find('a').attr('href', storageUrl).html(encodeURI(storageUrl));
+    scheduledRow.find('a').attr('href', encodeURI(storageUrl)).html(storageUrl);
     scheduledRow.removeClass('hidden').appendTo($scheduledT);
 };
 
