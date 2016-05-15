@@ -74,7 +74,7 @@ $(function () {
                     return;
 
                 var url = $form.attr('action');
-                var key = $form.find("input[name='key']");
+                var key = $form.find("input[name='key']").attr('value');
                 var fullUrl = url + '/' + key;
 
                 initFileRow(file.name, fullUrl);

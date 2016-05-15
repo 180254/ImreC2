@@ -106,6 +106,7 @@ var createStorageForComm = function (comm, callback) {
     var comm2 = {
         task: { scale: comm.task.scale },
         files: comm.filesArr.length,
+        parentComm: comm.storageId,
         subComm: []
     };
 

@@ -11,15 +11,23 @@ var s3Form = require('../ractions/s3form');
 router.get('/', function (req, res) {
     var id = req.query.id;
 
-    storage.getInfo(id, function (err, isTask) {
+    storage.getComm(id, function (err, comm) {
         if (err) res.redirect('/?a=noSuchStorage');
 
         else {
             var renderParams = {
                 id: id,
                 url: common.domainUrl(req) + '/s?id=' + id,
-                isTask: isTask,
-                s3form: isTask ? null : s3Form.getS3Form(req, id)
+
+                parentId: comm.parentComm || 'None',
+                parentUrl: comm.parentComm !== null
+                    ? common.domainUrl(req) + '/s?id=' + comm.parentComm
+                    : null,
+
+                isTask: comm.task !== null,
+                s3form: comm.task !== null
+                    ? null
+                    : s3Form.getS3Form(req, id)
             };
 
             res.render('storage', renderParams);

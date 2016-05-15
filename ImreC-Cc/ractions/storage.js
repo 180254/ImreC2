@@ -19,17 +19,6 @@ var getComm = function (storage, callback) {
     });
 };
 
-var getInfo = function (storageId, callback) {
-    getComm(storageId, function (err, task) {
-        if (err) callback(err, null);
-
-        else {
-            var isTask = task.task !== null;
-            callback(null, isTask);
-        }
-    });
-};
-
 var newStorage = function (comm, callback) {
     var storageId = common.random2(STORAGE_ID_LEN);
 
@@ -37,7 +26,7 @@ var newStorage = function (comm, callback) {
         Bucket: aws.conf().S3.Name,
         Key: storageId + '/' + INFO_JSON,
         ACL: 'private',
-        Body: JSON.stringify(comm || { task: null, files: null, subComm: [] }),
+        Body: JSON.stringify(comm || { task: null, files: null, parentComm: null, subComm: [] }),
         // Body: JSON.stringify({ task: { scale: 70 }, files: 10 }),
         ContentType: 'application/json'
     };
@@ -105,7 +94,6 @@ var getMeta = function (storage, fileName, callback) {
 };
 
 exports.INFO_JSON = INFO_JSON;
-exports.getInfo = getInfo;
 exports.newStorage = newStorage;
 exports.getFiles = getFiles;
 exports.getMeta = getMeta;

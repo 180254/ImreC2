@@ -36,7 +36,7 @@ var updateCommission = function () {
 
         if (!comm.task) {
             $info.html('None');
-            $percent.html('-');
+            $percent.html('N/A');
 
         } else if (comm.task.scale !== undefined) {
             $info.html('scale = ' + comm.task.scale + '%');

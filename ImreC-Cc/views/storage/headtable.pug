@@ -1,14 +1,20 @@
 table(class="table table-striped padding-top")
     tr
-        td(class="col-xs-1 middle") Storage ID
-        td(class="breakable" id="storage-id")=id
-    tr
-        td(class="col-xs-2 middle") Storage URL
+        td(class="col-xs-2 middle") Storage ID
         td
-            a(href=encodeURI(url) class="breakable")=url
+            a(href=encodeURI(url) class="breakable" id="storage-id")=id
+
+    tr
+        td(class="col-xs-2 middle") Parent ID
+        td
+            if parentUrl !== null
+                a(href=encodeURI(parentUrl) class="breakable")=parentId
+            unless parentUrl !== null
+                span(class="breakable")="N/A"
+
     tr
         td(class="col-xs-1 middle") Task
-        td(id="info-comm-task")="?"
+        td(id="info-comm-task")="(loading)"
     tr
         td(class="col-xs-1 middle") Percent done
-        td(id="info-comm-percent")="?"
+        td(id="info-comm-percent")="(loading)"
