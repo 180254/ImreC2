@@ -21,7 +21,7 @@ var updateSubCommissions = function (comm) {
             addToScheduledTable(
                 subComm.task.scale,
                 subComm.files,
-                domainUrl + '/s?=' + subComm.storageId);
+                domainUrl + '/s?id=' + subComm.storageId);
         }
     })
 };
