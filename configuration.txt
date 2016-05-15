@@ -1,0 +1,89 @@
+ImreC-Cc -- App1, NodeJS, Web app: commission collector
+ImreC-Wr -- App2, Java, Worker: image rescaler
+
+1. Create SimpleDB domain.
+1.1 Set that name in ImreC-[Cc,Wr]/conf.json
+
+2. Create SQS.
+2.1 Set that url in ImreC-[Cc,Wr]/conf.json
+
+2.2 Configure SQS Long Pooling
+http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-long-polling.html
+
+2.2.1 Set Receive Message Wait Time as WaitTimeSeconds conf.json
+2.2.2 Should be = 0 if Long Pooling is "disabled"
+
+2.3 Note: [Imrec-Wr] Default sleep time between sqs query is 5s.
+2.3.1 Set env var called WRSLEEP if you want change it.
+
+3. Create S3 bucket.
+3.1 Set bucket file deletion policy in AWS console.
+3.2 Set CORS configuration, example *bad security* file:
+<?xml version="1.0" encoding="UTF-8"?>
+<CORSConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
+    <CORSRule>
+        <AllowedOrigin>*</AllowedOrigin>
+        <AllowedMethod>GET</AllowedMethod>
+        <AllowedMethod>POST</AllowedMethod>
+        <AllowedMethod>PUT</AllowedMethod>
+        <AllowedHeader>*</AllowedHeader>
+    </CORSRule>
+</CORSConfiguration>
+
+3.3 Set that name in ImreC-[Cc,Wr]/conf.json
+3.4 Set that url in ImreC-[Cc,Wr]/conf.json
+
+4.1 Add EC2 LaunchConfiguration for ImreC-[Cc,Wr]
+4.1.1 Use "MEAN powered by Bitnami" as base AMI (example).
+
+4.1.1 Assign to LC role with these permissions:
+- Managed Policies for EC2, SQS, S3:
+AmazonEC2FullAccess
+AmazonSQSFullAccess
+AmazonS3FullAccess 
+
+- Inline Policies for SDB:
+Policy Name: SimpleDB-allow 
+Policy: {"Version":"2012-10-17","Statement":[{"Sid":"Stmt1462132516000","Effect":"Allow","Action":["sdb:*"],"Resource":["*"]}]}
+
+4.1.2 Use custom "User script"
+4.1.2.1 For ImreC-Cc (example)
+#!/bin/bash
+sudo /etc/init.d/bitnami stop
+sudo -H -u bitnami /opt/bitnami/git/bin/git clone https://github.com/180254/ImreC2 /home/bitnami/ImreC2
+sudo -H -u bitnami bash -c 'cd ~/ImreC2/ImreC-Cc && /opt/bitnami/nodejs/bin/npm install'
+sudo -H -u bitnami bash -c 'cd ~/ImreC2/ImreC-Cc && /opt/bitnami/nodejs/bin/npm update'
+sudo -H -u bitnami bash -c 'cd ~/ImreC2/ImreC-Cc && /usr/bin/screen -dm /opt/bitnami/nodejs/bin/npm start'
+
+4.1.2.2 For ImreC-Wr(example)
+#!/bin/bash
+sudo /etc/init.d/bitnami stop
+sudo add-apt-repository ppa:webupd8team/java -y
+sudo aptitude update
+echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections
+sudo aptitude install install oracle-java8-installer maven -y
+sudo -H -u bitnami /opt/bitnami/git/bin/git clone https://github.com/180254/ImreC2 /home/bitnami/ImreC2
+sudo -H -u bitnami bash -c 'cd ~/ImreC2/ImreC-Wr && /usr/bin/screen -dm /usr/bin/mvn compile exec:java'
+
+4.1.2.3 Note: For ImreC-Cc total startup time equals approx ~280 seconds
+4.1.2.4 Note: For ImreC-Wr total startup time equals approx ~420 seconds
+
+4.2. Add ASG for ImreC-[Cc,Wr]
+4.3. Add ELB for ImreC-Cc
+
+5. Local testing:
+
+Fill config.json in ImreC-[Cc,Wr]\
+{
+  "accessKeyId": "",
+  "secretAccessKey": "",
+  "region": "us-west-2"
+}
+
+How to start ImreC-Cc (choose one):
+* npm install && npm start
+* npm install && node bin/www
+
+How to start ImreC-Wr (choose one):
+* mvn compile exec:java
+* mvn package && java -jar target/imrec-worker-2.0.0-jar-with-dependencies.jar
