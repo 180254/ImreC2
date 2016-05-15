@@ -10,7 +10,7 @@ var logger = require('../utils/logger');
 router.get('/', function (req, res) {
 
     var options = {
-        ip: selfIp.ip(),
+        selfIp: selfIp.ip(),
         actionError: req.query.a === 'error',
         noSuchStorage: req.query.a === 'noSuchStorage'
     };
