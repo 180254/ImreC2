@@ -53,13 +53,10 @@ public class ResizeTask implements Runnable {
             ObjectMetadata itemMetadata = itemObject.getObjectMetadata();
             itemMetadataBackup = itemMetadata.clone();
 
-            // interesting meta
-            String meta_oFilename = itemMetadata.getUserMetaDataOf(Meta.FILENAME);
-
             // resize!!
             InputStream object$is = itemObject.getObjectContent();
             int sizeMultiplier = commission.getTask().getScale();
-            String imageType = FilenameUtils.getExtension(meta_oFilename);
+            String imageType = FilenameUtils.getExtension(commission.getFilename());
             InputStreamE resized = ir.resize(object$is, sizeMultiplier, imageType);
 
             // update metadata
@@ -80,8 +77,8 @@ public class ResizeTask implements Runnable {
                 itemMetadataBackup.getUserMetadata().put(Meta.WORKER, selfIp);
 
                 am.s3$copyObject(
-                        commission.getInputFileKey(), commission.getOutputFileKey(),
-                        itemMetadataBackup, CannedAccessControlList.Private);
+                        commission.getInputFileKey(), commission.getOutputFileKeyForFail(),
+                        itemMetadataBackup, CannedAccessControlList.PublicRead);
             }
 
             am.sqs$deleteMessageAsync(message);

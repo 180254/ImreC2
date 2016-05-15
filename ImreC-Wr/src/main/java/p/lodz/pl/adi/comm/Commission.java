@@ -29,12 +29,28 @@ public class Commission {
         return task;
     }
 
+    public String getStorageId1() {
+        return storageId1;
+    }
+
+    public String getStorageId2() {
+        return storageId2;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
     public String getInputFileKey() {
         return String.format("%s/%s", storageId1, filename);
     }
 
     public String getOutputFileKey() {
         return String.format("%s/%s", storageId2, filename);
+    }
+
+    public String getOutputFileKeyForFail() {
+        return String.format("%s/FAIL_%s", storageId2, filename);
     }
 
     public static Commission read(String str) throws IOException {
