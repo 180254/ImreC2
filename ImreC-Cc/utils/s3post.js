@@ -35,6 +35,10 @@ Policy.prototype.setCollector = function (collector) {
     this.policy.conditions[7][2] = collector;
 };
 
+Policy.prototype.setSecurityToken = function (securityToken) {
+    this.policy.conditions[9][2] = securityToken;
+};
+
 Policy.prototype.generateEncodedPolicyDocument = function () {
     return ciphers.encode(this.policy, 'base64');
 };
@@ -83,11 +87,15 @@ S3Form.prototype.addS3FormFields = function (fields, filename) {
 };
 
 S3Form.prototype.addS3CredentialsFields = function (fields, awsConfig) {
-    fields.push(this.field(ACCESS_KEY_FIELD_NAME, awsConfig.accessKeyId));
+    var accessKeyId = awsConfig.accessKeyId || awsConfig.AccessKeyId;
+    var secretAccessKey = awsConfig.secretAccessKey || awsConfig.SecretAccessKey;
+    
+    fields.push(this.field(ACCESS_KEY_FIELD_NAME, accessKeyId));
     fields.push(this.field(POLICY_FIELD_NAME, this.policyObj.generateEncodedPolicyDocument()));
-    fields.push(this.field(SIGNATURE_FIELD_NAME, this.policyObj.generateSignature(awsConfig.secretAccessKey)));
+    fields.push(this.field(SIGNATURE_FIELD_NAME, this.policyObj.generateSignature(secretAccessKey)));
     return fields;
 };
+
 
 S3Form.prototype.setField = function (fields, name, value) {
     for (var i = 0, len = fields.length; i < len; i++) {

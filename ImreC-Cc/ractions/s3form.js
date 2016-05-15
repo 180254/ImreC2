@@ -11,6 +11,7 @@ var getS3Form = function (req, storage) {
     s3Policy.setFilenamePrefix(storage + '/');
     s3Policy.setUploader(req.ip);
     s3Policy.setCollector(ipCopy);
+    s3Policy.setSecurityToken(aws.cred().sessionToken || '');
 
     var s3Form = new s3post.s3form(s3Policy);
     var s3Fields = s3Form.getFieldsBase();
@@ -21,6 +22,7 @@ var getS3Form = function (req, storage) {
     s3Form.setField(s3Fields, 'x-amz-meta-uploader', req.ip);
     s3Form.setField(s3Fields, 'x-amz-meta-collector', ipCopy);
     s3Form.setField(s3Fields, 'x-amz-meta-worker', '-');
+    s3Form.setField(s3Fields, 'x-amz-security-token', aws.cred().sessionToken || '');
 
     return {
         url: aws.conf().S3.Url,

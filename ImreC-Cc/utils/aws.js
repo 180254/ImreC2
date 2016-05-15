@@ -63,6 +63,7 @@ var initAws = function (callback) {
         s3Client = new AWS.S3();
         sdbClient = new AWS.SimpleDB();
         sqsClient = new AWS.SQS();
+
         callback();
     };
 
@@ -74,6 +75,7 @@ var initAws = function (callback) {
 };
 
 // *********************************************************************************************
+
 
 var s3 = function () {
     return s3Client;
@@ -103,4 +105,3 @@ exports.sdb = sdb;
 exports.sqs = sqs;
 exports.conf = conf;
 exports.cred = cred;
-

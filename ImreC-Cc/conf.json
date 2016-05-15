@@ -22,6 +22,7 @@
         ["eq", "$x-amz-meta-uploader", ""],
         ["eq", "$x-amz-meta-collector", ""],
         ["eq", "$x-amz-meta-worker", "-"],
+        ["eq", "$x-amz-security-token", ""],
         ["starts-with", "$Content-Type", "image/"]
       ]
     }
