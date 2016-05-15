@@ -4,6 +4,8 @@ var express = require('express');
 var router = express.Router();
 
 var selfIp = require('../utils/selfIp');
+var common = require('../utils/common');
+var logger = require('../utils/logger');
 
 router.get('/', function (req, res) {
 
@@ -13,7 +15,9 @@ router.get('/', function (req, res) {
         noSuchStorage: req.query.a === 'noSuchStorage'
     };
 
-    res.render('index', options)
+    res.render('index', options);
+
+    logger.log(req, 'CC_REQ_INDEX', common.fullUrl(req))
 });
 
 module.exports = router;

@@ -24,7 +24,7 @@ router.get('/', function (req, res) {
         }
     });
 
-    logger.log(req, 'REQ_SDB', common.fullUrl(req))
+    logger.log(req, 'CC_REQ_SDB', common.fullUrl(req))
 });
 
 var sortAttributesInResult = function (data) {

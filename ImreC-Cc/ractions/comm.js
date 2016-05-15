@@ -1,6 +1,7 @@
 'use strict';
 
 var storage = require('./storage');
+var logger = require('../utils/logger');
 var aws = require('../utils/aws');
 
 /*
@@ -27,10 +28,15 @@ var scheduleCheckedComm = function (comm, storageId2) {
         };
 
         aws.sqs().sendMessage(params, function (err) {
-            if (err) console.log(err.stack);
+            if (err) {
+                logger.log(null, 'CC_R_ACTION_ERR', 'scheduleCheckedComm.sendMessage', err.stack);
+                console.log(err.stack);
+            }
+
             else console.log(params.MessageBody);
         });
 
+        logger.log(null, 'CC_COMM_SCHEDULED', JSON.stringify(message));
     });
 };
 
@@ -58,7 +64,10 @@ var addSubCommToStorage = function (comm, subStorageId) {
         };
 
         aws.s3().upload(params, function (err) {
-            if (err) console.log(err.stack);
+            if (err) {
+                logger.log(null, 'CC_R_ACTION_ERR', 'addSubCommToStorage.upload', err.stack);
+                console.log(err.stack);
+            }
             else console.log(params.Body);
         });
     })

@@ -5,6 +5,7 @@ var INFO_JSON = '__info.json';
 
 var aws = require('../utils/aws');
 var common = require('../utils/common');
+var logger = require('../utils/logger');
 
 var getComm = function (storage, callback) {
     var params = {
@@ -42,7 +43,10 @@ var newStorage = function (comm, callback) {
     };
 
     aws.s3().upload(params, function (err) {
-        if (err) callback(err, null);
+        if (err) {
+            callback(err, null);
+            logger.log(null, 'CC_R_ACTION_ERR', 'newStorage.upload', err.stack);
+        }
         else callback(null, storageId);
     });
 

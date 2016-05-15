@@ -78,6 +78,15 @@ $(function () {
                 var fullUrl = url + '/' + key;
 
                 initFileRow(file.name, fullUrl);
+
+                // /s/file/uploaded?s=STORAGE_ID&f=FILE_ID
+                var storageId = $('#storage-id').html();
+                var fileUploadedUrl = '/s/file/uploaded/?s='
+                    + encodeURIComponent(storageId)
+                    + '&f=' + encodeURIComponent(file.name);
+
+                //noinspection NodeModulesDependencies
+                $.get(fileUploadedUrl);
             });
         }
     });

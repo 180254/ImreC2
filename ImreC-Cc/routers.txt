@@ -9,6 +9,8 @@
 /s/file?s=STORAGE_ID
 /s/comm?s=STORAGE_ID
 
+/s/file/uploaded?s=STORAGE_ID&f=FILE_ID
+
 /c/new (POST)
 - task: { scale: 70 }
 - filesArr: [a, b, c]
