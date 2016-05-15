@@ -29,11 +29,11 @@ var onStart = function (callback) {
 var sdbInit = function () {
     var params = { DomainName: aws.conf().Sdb.Domain };
 
-    aws.sdb().deleteDomain(params, function (err, data) {
+    aws.sdb().deleteDomain(params, function (err) {
         if (err) throw new Error(err.stack);
 
         else {
-            aws.sdb().createDomain(params, function (err, data) {
+            aws.sdb().createDomain(params, function (err) {
                 if (err) throw new Error(err.stack);
                 else checkStartDone();
             });
