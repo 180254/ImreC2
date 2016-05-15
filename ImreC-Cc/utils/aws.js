@@ -32,21 +32,22 @@ var configFromJson2 = function (callback) {
 var getRegionFromEC2 = function (callback) {
     var client = new Client();
     client.get('http://169.254.169.254/latest/meta-data/placement/availability-zone',
-        function (data, response) {
-            var region1 = response.slice(0, -1);
+        function (data) {
+            var region1 = data.toString().slice(0, -1);
             AWS.config.update({ region: region1 });
+            callback();
         })
         .on('error', function () {
-            configFromJson(callback);
+            configFromJson2(callback);
         });
 };
 
 // *********************************************************************************************
 
 var configFromEC2Meta = function (callback) {
-    var EC2MCred = new AWS.EC2MetadataCredentials();
+    AWS.config.credentials = new AWS.EC2MetadataCredentials();
 
-    EC2MCred.refresh(function (err) {
+    AWS.config.credentials.refresh(function (err) {
         if (err) configFromJson2(callback);
         else getRegionFromEC2(callback);
     })
