@@ -26,9 +26,7 @@ block content
         include storage/uploadForm.pug
 
     include storage/fileTable.pug
-
-    unless isTask
-        include storage/commArea.pug
+    include storage/commArea.pug
 
     p(class="padding-top")
         a(href="#" class="reload") Refresh (#[b F5]).#[br]
