@@ -9,6 +9,21 @@
   },
   "S3": {
     "Name": "imrec-bucket",
-    "Url": "https://imrec-bucket.s3-us-west-2.amazonaws.com"
+    "Url": "https://imrec-bucket.s3-us-west-2.amazonaws.com",
+    "Policy": {
+      "expiration": {"day": 1},
+      "conditions": [
+        ["starts-with", "$key", ""],
+        {"bucket": "imrec-bucket"},
+        {"acl": "public-read"},
+        {"success_action_status": "2xx"},
+        ["content-length-range", 1, 5242880],
+        ["starts-with", "$x-amz-meta-filename", ""],
+        ["eq", "$x-amz-meta-uploader", ""],
+        ["eq", "$x-amz-meta-collector", ""],
+        ["eq", "$x-amz-meta-worker", "-"],
+        ["starts-with", "$Content-Type", "image/"]
+      ]
+    }
   }
 }

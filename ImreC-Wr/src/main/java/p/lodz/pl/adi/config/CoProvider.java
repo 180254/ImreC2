@@ -1,5 +1,6 @@
 package p.lodz.pl.adi.config;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
@@ -25,6 +26,9 @@ public class CoProvider {
         Path path = Paths.get(filename);
         byte[] bytes = Files.readAllBytes(path);
         String content = new String(bytes, StandardCharsets.UTF_8);
-        return new ObjectMapper().reader(clazz).readValue(content);
+
+        return new ObjectMapper()
+                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+                .reader(clazz).readValue(content);
     }
 }
