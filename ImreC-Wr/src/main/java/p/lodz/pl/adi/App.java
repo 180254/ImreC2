@@ -58,11 +58,11 @@ public class App {
             int sleep2 = Integer.parseInt(sleep);
             if (sleep2 > 0) return sleep2;
             else {
-                logger.log2("SLEEP_NOTE", "Env set but <= 0.");
+                logger.log2("INT_SLEEP_SECONDS", "Env set but <= 0.");
                 return DEFAULT_SLEEP_SECONDS;
             }
         } catch (NumberFormatException ignored) {
-            logger.log2("SLEEP_SECONDS", "Env set but exception.");
+            logger.log2("INT_SLEEP_SECONDS", "Env set but exception.");
             return DEFAULT_SLEEP_SECONDS;
         }
     }
@@ -76,14 +76,14 @@ public class App {
             return in3.readLine().trim();
 
         } catch (IOException ignored) {
-            logger.log2("SELF_IP", "Cannot obtain external ip.");
+            logger.log2("INT_SELF_IP", "Cannot obtain external ip.");
             return InetAddress.getLocalHost().toString();
         }
     }
 
     public void service() throws InterruptedException {
-        logger.log2("SLEEP_SECONDS", sleepSeconds);
-        logger.log2("SELF_IP", selfIp);
+        logger.log2("INT_SLEEP_SECONDS", sleepSeconds);
+        logger.log2("INT_SELF_IP", selfIp);
 
         //noinspection InfiniteLoopStatement
         do {
@@ -94,7 +94,7 @@ public class App {
             for (Message message : messages) {
                 Runnable resizeTask = new ResizeTask(
                         message, logger, am, im, selfIp,
-                        () -> logger.log2("SERVICE",
+                        () -> logger.log2("INT_SERVICE",
                                 executor.getCompletedTaskCount() + 1,
                                 executor.getActiveCount() - 1)
                 );

@@ -46,15 +46,17 @@ public class Logger {
 
         if (sdbPut) {
             Collection<Pair<String, String>> attrs = new ArrayList<>();
-            attrs.add(Pair.of("aSource", "Wr/" + selfIp));
-            attrs.add(Pair.of("bDate", LocalDateTime.now(ZoneOffset.UTC).format(dtf)));
-            attrs.add(Pair.of("cIP", "?"));
-            attrs.add(Pair.of("dAction", action));
+            attrs.add(Pair.of("aApp", "Wr"));
+            attrs.add(Pair.of("bAppInstance", selfIp));
+
+            attrs.add(Pair.of("cDate", LocalDateTime.now(ZoneOffset.UTC).format(dtf)));
+            attrs.add(Pair.of("dReqIP", "?"));
+            attrs.add(Pair.of("eAction", action));
 
             for (int i = 0; i < args.length; i++) {
                 Object mes = args[i];
                 String mesAsString = mes != null ? mes.toString() : "NULL";
-                attrs.add(Pair.of("eArg_" + i, mesAsString));
+                attrs.add(Pair.of("fArg_" + i, mesAsString));
             }
 
             am.sdb$putLogAsync(attrs);
