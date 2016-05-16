@@ -1,4 +1,5 @@
 'use strict';
+/* global ajaxError */
 
 /* eslint-disable no-unused-vars */
 var initMeta = function (fileRow) {
@@ -17,10 +18,8 @@ var initMeta = function (fileRow) {
     $.get(metaUrl, function (meta) {
         $(cols.get(1)).html(meta.collector);
         $(cols.get(2)).html(meta.worker);
+    }).fail(ajaxError);
 
-    }).fail(function () {
-        alert('Something go wrong. Try reload page.');
-    });
 };
 
 /* eslint-disable no-unused-vars */
@@ -48,7 +47,5 @@ var initMetaTable = function () {
             $(cols.get(1)).html(meta2[i].collector);
             $(cols.get(2)).html(meta2[i].worker);
         }
-    }).fail(function () {
-        alert('Something go wrong. Try reload page.');
-    });
+    }).fail(ajaxError);
 };

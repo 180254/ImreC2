@@ -1,5 +1,5 @@
 'use strict';
-/* global addToScheduledTable */
+/* global addToScheduledTable, ajaxError */
 
 var getCommission = function (callback) {
     var storageId = $('#storage-id').html();
@@ -8,9 +8,7 @@ var getCommission = function (callback) {
     //noinspection NodeModulesDependencies
     $.get(commUrl, function (data) {
         callback(data);
-    }).fail(function () {
-        alert('Something go wrong. Try reload page.');
-    });
+    }).fail(ajaxError);
 };
 
 var updateSubCommissions = function (comm) {

@@ -1,5 +1,5 @@
 'use strict';
-/* global removeLoader, addLoader */
+/* global removeLoader, addLoader, ajaxError */
 
 var getSelectedFileNames = function () {
     return $.map($('.files-check:checked'), function (e) {
@@ -60,12 +60,10 @@ var onScheduleButton = function () {
             scrollTop: $('#scheduled-h').offset().top - 30
         }, 300);
 
-    }).fail(function () {
-        alert('Something go wrong. Try reload page.');
-
     }).always(function () {
         removeLoader();
-    });
+
+    }).fail(ajaxError);
 };
 
 $(function () {

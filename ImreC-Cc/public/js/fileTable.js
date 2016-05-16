@@ -1,5 +1,5 @@
 'use strict';
-/* global initMeta, initMetaTable, initCheckboxChanges, updateCommission, removeLoader */
+/* global initMeta, initMetaTable, initCheckboxChanges, updateCommission, removeLoader, ajaxError */
 
 var initFileRow = function (name, url, doInitMeta) {
     var $table = $('#file-table').find('tbody');
@@ -35,9 +35,7 @@ var initFileTable = function () {
         }
         initMetaTable();
 
-    }).fail(function () {
-        alert('Something go wrong. Try reload page.');
-    });
+    }).fail(ajaxError);
 };
 
 

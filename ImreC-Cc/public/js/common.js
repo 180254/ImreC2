@@ -8,8 +8,15 @@ var removeLoader = function () {
 var addLoader = function () {
     $('#not-yet').removeClass('hidden');
 };
-/* eslint-disable no-unused-vars */
 
+var ajaxError = function (jqXHR, textStatus, errorThrown) {
+    // console.log('errorThrown=' + errorThrown);
+    // errorThrown is '' if ajaxError is caused by page leave
+    if (errorThrown !== '') {
+        alert('Something go wrong. Try reload page.');
+    }
+};
+/* eslint-enable no-unused-vars */
 
 $(function () {
 
