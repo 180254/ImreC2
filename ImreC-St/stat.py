@@ -20,20 +20,21 @@ def init():
         conf = json.load(data_file)
 
     sdb = boto3.client(
-        'sdb',
+        "sdb",
         aws_access_key_id=config["accessKeyId"],
         aws_secret_access_key=config["secretAccessKey"],
         region_name=config["region"]
     )
 
 
-def select_all_dates():
+def select_all_dates(action):
     select = "select cDate from " + conf["Sdb"]["Domain"] + \
-             " where cDate like '%' and eAction = 'CC_COMM_SCHEDULED'" \
-             " order by cDate desc"
+             " where cDate like '%' and eAction = '" + action + \
+             "' order by cDate desc limit 1000"
 
     result = []
-    token = ''
+    token = ""
+    print("Collecting %s ... %d" % (action, len(result)))
     while True:
         response = sdb.select(SelectExpression=select, NextToken=token)
 
@@ -45,10 +46,11 @@ def select_all_dates():
         if "NextToken" in response:
             # break
             token = response["NextToken"]
-            print("Collecting ... %d" % len(result))
+            print("Collecting %s ... %d" % (action, len(result)))
         else:
             break
 
+    print("Collecting %s ... %d" % (action, len(result)))
     return result
 
 
@@ -75,19 +77,30 @@ def calculate_busy_hour(dates):
     return busy_hour_sum, busy_hour_start
 
 
-def main():
-    init()
-    dates = select_all_dates()
-
+def print_stats(dates):
     total = len(dates)
-    print("Total commissions: %d" % total)
+    print("Total: %d" % total)
 
     hours = (dates[0] - dates[-1]).total_seconds() / 3600
     avg = total / hours
-    print("Average comm/hour: %.3f " % avg)
+    print("Average per hour: %.3f " % avg)
 
     busy_hour = calculate_busy_hour(dates)
-    print("BusyHour comm/hour: %d (%s)" % (busy_hour[0], str(busy_hour[1])))
+    print("BusyHour per hour: %d (%s)" % (busy_hour[0], str(busy_hour[1])))
+
+
+def calc_print_stats(action):
+    dates = select_all_dates(action)
+    print("\n---" + action + "---")
+    print_stats(dates)
+
+
+def main():
+    init()
+
+    calc_print_stats("CC_COMM_SCHEDULED")
+    print("")
+    calc_print_stats("CC_FILE_UPLOADED")
 
 
 if __name__ == "__main__":
