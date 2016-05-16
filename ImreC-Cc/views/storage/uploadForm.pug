@@ -1,6 +1,12 @@
 p
     span Note: you can add more then file at once.#[br]
-    span Note: drag&drop also works.
+    span Note: drag&drop also works.#[br]
+    span Note: info about success upload hides automatically.#[br]
+    span Note: info about failed upload can be hidden by clicking on red message.#[br]
+
+p
+    span(class="bold")="Files in upload queue: "
+    span(id="upload-queue" class="bold")="0"
 
 form(action=s3form.url method="post" enctype="multipart/form-data" id="s3form")
     each key in s3form.s3fields
