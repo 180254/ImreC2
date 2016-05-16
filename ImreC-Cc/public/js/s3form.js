@@ -47,7 +47,7 @@ $(function () {
             updateUploadQueue(uploadQueue += data.files.length);
 
             data.files.forEach(function (file) {
-                waitFor(_isBusy, false, 300, 0, file.name, function () {
+                waitFor(_isBusy, false, 1000, 0, file.name, function () {
                     uploading++;
                     $form.find('input[name="Content-Type"]').val(file.type);
 
