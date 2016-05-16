@@ -48,7 +48,7 @@ router.get('/new', function (req, res) {
     });
 });
 
-router.get('/meta', function (req, res) {
+router.get('/meta1', function (req, res) {
     var storageId = req.query.s;
     var fileName = req.query.f;
 
@@ -59,7 +59,25 @@ router.get('/meta', function (req, res) {
             res.contentType('application/json');
             res.send(JSON.stringify(meta));
 
-            logger.log(req, 'CC_REQ_STORAGE_META', common.fullUrl(req), JSON.stringify(req.query));
+            logger.log(req, 'CC_REQ_STORAGE_META1', common.fullUrl(req), JSON.stringify(req.query));
+        }
+    });
+});
+
+router.post('/meta2', function (req, res) {
+    var storageId = req.query.s;
+    var fileNames = req.body;
+
+    storage.getMeta2(storageId, fileNames, function (err, meta2) {
+        if (err && err === '400')res.sendStatus(400);
+        else if (err) res.sendStatus(404);
+
+        else {
+            res.contentType('application/json');
+            res.send(JSON.stringify(meta2));
+
+            logger.log(req, 'CC_REQ_STORAGE_META2', common.fullUrl(req),
+                JSON.stringify(req.query), JSON.stringify(req.body));
         }
     });
 });

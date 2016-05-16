@@ -5,7 +5,10 @@
 /s/new
 /s?id=STORAGE_ID
 
-/s/meta?s=STORAGE_ID&f=FILE_ID
+/s/meta1?s=STORAGE_ID&f=FILE_ID
+/s/meta2?s=STORAGE_ID (post)
+- array [file1, file2]
+
 /s/file?s=STORAGE_ID
 /s/comm?s=STORAGE_ID
 

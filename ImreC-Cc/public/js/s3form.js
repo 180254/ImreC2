@@ -77,7 +77,7 @@ $(function () {
                 var key = $form.find("input[name='key']").attr('value');
                 var fullUrl = url + '/' + key;
 
-                initFileRow(file.name, fullUrl);
+                initFileRow(file.name, fullUrl, true);
 
                 // /s/file/uploaded?s=STORAGE_ID&f=FILE_ID
                 var storageId = $('#storage-id').html();

@@ -3,6 +3,8 @@
 var STORAGE_ID_LEN = 8;
 var INFO_JSON = '__info.json';
 
+var Promise = require('promise');
+
 var aws = require('../utils/aws');
 var common = require('../utils/common');
 var logger = require('../utils/logger');
@@ -93,9 +95,59 @@ var getMeta = function (storage, fileName, callback) {
     });
 };
 
+/* ********************************************************************* */
+
+var getMeta2RequestProper = function (fileNames) {
+    if (!Array.isArray(fileNames)) {
+        return false;
+    }
+
+    for (var i = 0; i < fileNames.length; i++) {
+        var isString = typeof fileNames[i] === 'string' || fileNames[i] instanceof String;
+        if (!isString) return false;
+    }
+
+    return true;
+};
+
+var getMetaPromise = function (storage, fileName) {
+    var params = {
+        Bucket: aws.conf().S3.Name,
+        Key: storage + '/' + fileName
+    };
+
+    return new Promise(function (resolve, reject) {
+        aws.s3().headObject(params, function (err, result) {
+            if (err) return reject(err);
+            resolve(result.Metadata);
+        });
+    });
+};
+
+var getMeta2 = function (storage, fileNames, callback) {
+    if (!getMeta2RequestProper(fileNames)) {
+        callback('400', null);
+    }
+
+    var promises = [];
+    for (var i = 0; i < fileNames.length; i++) {
+        promises.push(getMetaPromise(storage, fileNames[i]))
+    }
+
+    Promise.all(promises).then(function () {
+        callback(null, arguments[0]);
+    }, function (err) {
+        callback(err, null);
+    });
+};
+
+/* ********************************************************************* */
+
+
 exports.INFO_JSON = INFO_JSON;
 exports.newStorage = newStorage;
 exports.getFiles = getFiles;
 exports.getMeta = getMeta;
+exports.getMeta2 = getMeta2;
 exports.getComm = getComm;
 

@@ -1,7 +1,7 @@
 'use strict';
-/* global initMeta, initCheckboxChanges, updateCommission, removeLoader */
+/* global initMeta, initMetaTable, initCheckboxChanges, updateCommission, removeLoader */
 
-var initFileRow = function (name, url) {
+var initFileRow = function (name, url, doInitMeta) {
     var $table = $('#file-table').find('tbody');
 
     var $fileRow = $table.find('>:first-child').clone();
@@ -17,7 +17,7 @@ var initFileRow = function (name, url) {
     $fileRow.removeClass('hidden');
     $table.append($fileRow);
 
-    initMeta($fileRow);
+    if (doInitMeta) initMeta($fileRow);
     initCheckboxChanges($checkbox);
 };
 
@@ -28,12 +28,12 @@ var initFileTable = function () {
     //noinspection NodeModulesDependencies
     $.get(metaUrl, function (data) {
         removeLoader();
+        updateCommission();
 
         for (var i = 0; i < data.length; i++) {
-            initFileRow(data[i].name, data[i].url);
+            initFileRow(data[i].name, data[i].url, false);
         }
-
-        updateCommission();
+        initMetaTable();
 
     }).fail(function () {
         alert('Something go wrong. Try reload page.');
