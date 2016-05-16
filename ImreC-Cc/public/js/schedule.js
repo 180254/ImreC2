@@ -37,8 +37,9 @@ var addToScheduledTable = function (scale, files, storageUrl) {
 var onScheduleButton = function () {
     addLoader();
 
+    var parseF = Number.parseInt || parseInt;
     var param = {
-        task: { scale: Number.parseInt($('#scale-info').attr('value')) },
+        task: { scale: parseF($('#scale-info').attr('value')) },
         filesArr: getSelectedFileNames(),
         storageId: $('#storage-id').html()
     };
