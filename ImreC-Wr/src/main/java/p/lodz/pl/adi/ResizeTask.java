@@ -45,11 +45,12 @@ public class ResizeTask implements Runnable {
 
         Commission commission = null;
         ObjectMetadata itemMetadataBackup = null;
+        S3Object itemObject = null;
 
         try {
             commission = Commission.read(message.getBody());
 
-            S3Object itemObject = am.s3$getObject(commission.getInputFileKey());
+            itemObject = am.s3$getObject(commission.getInputFileKey());
             ObjectMetadata itemMetadata = itemObject.getObjectMetadata();
             itemMetadataBackup = itemMetadata.clone();
 
@@ -87,6 +88,15 @@ public class ResizeTask implements Runnable {
             logger.log("MESSAGE_PROC_EXCEPTION", message.getBody(), ex.getClass().getName(), ex.getMessage());
 
             am.sqs$changeVisibilityTimeoutAsync(message, VISIBILITY_NEW_TIMEOUT_SEC);
+
+        } finally {
+            if (itemObject != null) {
+                try {
+                    itemObject.close();
+                } catch (IOException ex) {
+                    logger.log2("INT_CLOSE_FAIL", ex.getClass().getName(), ex.getMessage());
+                }
+            }
         }
 
         callback.run();
