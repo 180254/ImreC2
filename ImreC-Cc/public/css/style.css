@@ -3,10 +3,6 @@
     font-weight: bold;
 }
 
-.bold {
-    font-weight: bold;
-}
-
 /* ********************************************************************* */
 
 .hidden {
@@ -156,4 +152,11 @@
 
 .scheduled :first-child {
     color: darkblue;
+}
+
+/* ********************************************************************* */
+
+.upload-queue-info {
+    font-weight: bold;
+    color: brown;
 }

@@ -51,6 +51,13 @@ $(function () {
             data.files.forEach(function (file) {
                 waitFor(_isBusy, false, 1000, 0, file.name, function () {
                     uploading++;
+
+                    if ($('.bar[data-file="' + file.name + '"]').length !== 0) {
+                        uploading--;
+                        updateUploadQueue(uploadQueue -= 1);
+                        return;
+                    }
+
                     $form.find('input[name="Content-Type"]').val(file.type);
 
                     var $key = $form.find('input[name="key"]');

@@ -5,8 +5,8 @@ p
     span Note: info about failed upload can be hidden by clicking on red message.#[br]
 
 p
-    span(class="bold")="Files in upload queue: "
-    span(id="upload-queue" class="bold")="0"
+    span(class="upload-queue-info")="Files in upload queue: "
+    span(id="upload-queue" class="upload-queue-info")="0"
 
 form(action=s3form.url method="post" enctype="multipart/form-data" id="s3form")
     each key in s3form.s3fields
@@ -15,4 +15,4 @@ form(action=s3form.url method="post" enctype="multipart/form-data" id="s3form")
     span(class="btn btn-info btn-file") just #[b ADD] some new #[b FILES]
         input(type="file" name="file" id="file" required="required" multiple="multiple")
 
-div(class="progress-bar-area padding-top")
+div(id="progress-bar-area" class="progress-bar-area padding-top")

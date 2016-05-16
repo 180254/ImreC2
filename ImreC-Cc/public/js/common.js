@@ -33,6 +33,10 @@ $(function () {
 
         //noinspection JSCheckFunctionSignatures
         $('#s3form').toggle(600);
+
+        //noinspection JSCheckFunctionSignatures
+        $('#progress-bar-area').toggle(600);
+        
         //noinspection JSCheckFunctionSignatures
         $('#file-table').toggle(600);
     });
