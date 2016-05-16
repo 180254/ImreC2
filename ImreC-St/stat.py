@@ -43,8 +43,8 @@ def select_all_dates(action):
     result = []
     token = ""
 
-    print_collecting(action, result)
-    while True:
+    while token is not None:
+        print_collecting(action, result)
         response = sdb.select(SelectExpression=select, NextToken=token)
 
         for item in response["Items"]:
@@ -52,12 +52,7 @@ def select_all_dates(action):
             value_date = datetime.datetime.strptime(value, "%Y-%m-%d %H:%M:%S")
             result.append(value_date)
 
-        if "NextToken" in response:
-            # break
-            token = response["NextToken"]
-            print_collecting(action, result)
-        else:
-            break
+        token = response["NextToken"] if "NextToken" in response else None
 
     print_collecting(action, result)
     return result
