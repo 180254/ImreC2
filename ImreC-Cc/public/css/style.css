@@ -133,6 +133,10 @@
 
 /* ********************************************************************* */
 
+#schedule-button {
+    width: 100%;
+}
+
 .scheduled {
     display: block;
     padding: 10px;

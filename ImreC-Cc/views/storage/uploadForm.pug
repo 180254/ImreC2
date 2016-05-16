@@ -2,7 +2,7 @@ form(action=s3form.url method="post" enctype="multipart/form-data" id="s3form")
     each key in s3form.s3fields
         input(type="hidden" name=key.name value=key.value)
 
-    span(class="btn btn-default btn-file") just #[b ADD] some new #[b FILES]
+    span(class="btn btn-info btn-file") just #[b ADD] some new #[b FILES]
         input(type="file" name="file" id="file" required="required" multiple="multiple")
 
 div(class="progress-bar-area padding-top")
