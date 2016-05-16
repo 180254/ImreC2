@@ -1,4 +1,4 @@
-h3="Task(s)"
+h4="New task"
 p.
     The only available task is rescaling.#[br]
     Supported&nbsp;image&nbsp;types: .png,&nbsp;.jpg,&nbsp;.bmp#[br]
@@ -8,7 +8,7 @@ form(class="form-horizontal padding-top")
     div(class="form-group")
         span(class="col-md-3 control-label") Selected images
         div(class="col-md-3")
-            textarea(id="selected-area" class="form-control" readonly="readonly" rows="4") None
+            textarea(id="selected-area" class="form-control" readonly="readonly" rows="4")
 
     div(class="form-group")
         label(for="scale-info" class="col-md-3 control-label") Requested scale (%)
@@ -22,10 +22,3 @@ form(class="form-horizontal padding-top")
             input(type="button" name="submit" value="Schedule a task"
             class="btn btn-primary"
             id="schedule-button" disabled="disabled")
-
-table(id="scheduled-t" class="table table-striped padding-top")
-    tr(class="hidden")
-        td(class="col-xs-2 middle")
-            span="scale=70%; files=4"
-        td(class="col-xs-8 middle")
-            a(class="scheduled-a" href="http://google.pl" target="_blank") http://google.pl

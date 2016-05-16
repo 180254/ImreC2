@@ -11,7 +11,9 @@ block content
     div(id="not-yet" class="busy-holder")
         div(class="loader busy")
 
-    h3='Storage ' + id
+    h3
+        span Storage&nbsp;
+        span=id
 
     if isTask
         p Refresh (#[b F5]) to obtain newest task state.
@@ -20,13 +22,16 @@ block content
 
     include storage/headTable.pug
 
-    h3='Files'
+    h4
+        span="Files "
+        a(href="#" id="files-show-hide")="(show/hide)"
 
     unless isTask
         include storage/uploadForm.pug
-
     include storage/fileTable.pug
-    include storage/commArea.pug
+
+    include storage/taskNew.pug
+    include storage/taskArea.pug
 
     p(class="padding-top")
         a(href="#" class="reload") Refresh (#[b F5]).#[br]

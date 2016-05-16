@@ -21,4 +21,13 @@ $(function () {
         tooltip: 'always'
     });
 
+    $('#files-show-hide').click(function () {
+        $(this).blur();
+
+        //noinspection JSCheckFunctionSignatures
+        $('#s3form').toggle(600);
+        //noinspection JSCheckFunctionSignatures
+        $('#file-table').toggle(600);
+    });
+
 });

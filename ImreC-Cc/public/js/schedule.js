@@ -8,9 +8,11 @@ var getSelectedFileNames = function () {
 };
 
 var updateSelectedArea = function () {
-    var selectedFilesNames = getSelectedFileNames().join('\n') || 'None';
-    $('#schedule-button').prop('disabled', selectedFilesNames === 'None');
-    $('#selected-area').html(selectedFilesNames);
+    var selectedFilesNames = getSelectedFileNames().join('\n');
+    var selectedFilesNames2 = selectedFilesNames || 'None, select some files using checkbox in Files table.';
+
+    $('#schedule-button').prop('disabled', selectedFilesNames === '');
+    $('#selected-area').html(selectedFilesNames2);
 };
 
 /* eslint-disable no-unused-vars */
@@ -29,6 +31,7 @@ var addToScheduledTable = function (scale, files, storageUrl) {
     scheduledRow.find('span').html('scale=' + scale + '%; files=' + files);
     scheduledRow.find('a').attr('href', encodeURI(storageUrl)).html(storageUrl);
     scheduledRow.removeClass('hidden').appendTo($scheduledT);
+    $('#scheduled-h').removeClass('hidden');
 };
 
 var onScheduleButton = function () {
@@ -52,6 +55,10 @@ var onScheduleButton = function () {
         addToScheduledTable(param.task.scale, param.filesArr.length, data.storageUrl);
         $('#schedule-button').blur();
 
+        $('html, body').animate({
+            scrollTop: $('#scheduled-h').offset().top - 30
+        }, 300);
+
     }).fail(function () {
         alert('Something go wrong. Try reload page.');
 
@@ -72,4 +79,6 @@ $(function () {
     $('#schedule-button').click(
         onScheduleButton
     );
+
+    updateSelectedArea();
 });
