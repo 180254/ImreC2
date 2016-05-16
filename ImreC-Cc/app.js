@@ -6,7 +6,6 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var cache = require('express-cache-response-directive');
 
 var indexRoute = require('./routes/index');
 var storageRoute = require('./routes/storage');
@@ -26,7 +25,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(cache());
+
+app.use(function (req, res, next) {
+    res.setHeader('Cache-Control', 'no-store');
+    return next();
+});
+
 
 app.use('/', indexRoute);
 app.use('/s', storageRoute);
