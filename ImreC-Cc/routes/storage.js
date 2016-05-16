@@ -9,6 +9,7 @@ var storage = require('../ractions/storage');
 var s3Form = require('../ractions/s3form');
 
 router.get('/', function (req, res) {
+    res.cacheControl({ mustRevalidate: true });
     var id = req.query.id;
 
     storage.getComm(id, function (err, comm) {
@@ -37,6 +38,7 @@ router.get('/', function (req, res) {
 });
 
 router.get('/new', function (req, res) {
+    res.cacheControl({ mustRevalidate: true });
 
     storage.newStorage(null, function (err, id) {
         if (err) res.redirect('/?a=error');
@@ -49,6 +51,7 @@ router.get('/new', function (req, res) {
 });
 
 router.get('/meta1', function (req, res) {
+    res.cacheControl({ mustRevalidate: true });
     var storageId = req.query.s;
     var fileName = req.query.f;
 
@@ -65,6 +68,7 @@ router.get('/meta1', function (req, res) {
 });
 
 router.post('/meta2', function (req, res) {
+    res.cacheControl({ mustRevalidate: true });
     var storageId = req.query.s;
     var fileNames = req.body;
 
@@ -83,6 +87,7 @@ router.post('/meta2', function (req, res) {
 });
 
 router.get('/file', function (req, res) {
+    res.cacheControl({ mustRevalidate: true });
     var storageId = req.query.s;
 
     storage.getFiles(storageId, function (err, files) {
@@ -98,6 +103,7 @@ router.get('/file', function (req, res) {
 });
 
 router.get('/comm', function (req, res) {
+    res.cacheControl({ mustRevalidate: true });
     var storageId = req.query.s;
 
     storage.getComm(storageId, function (err, comm) {
@@ -113,6 +119,7 @@ router.get('/comm', function (req, res) {
 });
 
 router.get('/file/uploaded', function (req, res) {
+    res.cacheControl({ mustRevalidate: true });
     res.sendStatus(202);
 
     var storageId = req.query.s;

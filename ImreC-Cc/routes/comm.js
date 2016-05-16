@@ -8,7 +8,8 @@ var logger = require('../utils/logger');
 var comm = require('../ractions/comm');
 
 router.post('/new', function (req, res) {
-
+    res.cacheControl({ mustRevalidate: true });
+    
     comm.scheduleComm(req.body, function (err, storageId) {
         if (err) res.sendStatus(400);
 

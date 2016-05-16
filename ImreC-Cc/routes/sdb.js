@@ -8,6 +8,7 @@ var logger = require('../utils/logger');
 var aws = require('../utils/aws');
 
 router.get('/', function (req, res) {
+    res.cacheControl({ mustRevalidate: true });
     res.setHeader('Content-Type', 'application/json');
 
     var params = {
