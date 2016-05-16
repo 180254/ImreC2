@@ -116,19 +116,19 @@ $(function () {
                     $progress.remove();
                 });
 
-
                 var $fileList = $('#file-list');
                 if ($fileList.find('a:contains("' + file.name + '")').length !== 0)
                     return;
 
+                var storageId = $('#storage-id').text();
                 var url = $form.attr('action');
-                var key = $form.find("input[name='key']").attr('value');
-                var fullUrl = url + '/' + encodeURIComponent(key);
+                var fullUrl = url
+                    + '/' + encodeURIComponent(storageId)
+                    + '/' + encodeURIComponent(file.name);
 
                 initFileRow(file.name, fullUrl, true);
 
                 // /s/file/uploaded?s=STORAGE_ID&f=FILE_ID
-                var storageId = $('#storage-id').text();
                 var fileUploadedUrl = '/s/file/uploaded/?s='
                     + encodeURIComponent(storageId)
                     + '&f=' + encodeURIComponent(file.name);
