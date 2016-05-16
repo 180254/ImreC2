@@ -1,5 +1,9 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 import datetime
 import json
+import sys
 
 import boto3
 
@@ -27,6 +31,10 @@ def init():
     )
 
 
+def print_collecting(action, result):
+    print("Collecting %s ... %d" % (action, len(result)))
+
+
 def select_all_dates(action):
     select = "select cDate from " + conf["Sdb"]["Domain"] + \
              " where cDate like '%' and eAction = '" + action + \
@@ -34,7 +42,8 @@ def select_all_dates(action):
 
     result = []
     token = ""
-    print("Collecting %s ... %d" % (action, len(result)))
+
+    print_collecting(action, result)
     while True:
         response = sdb.select(SelectExpression=select, NextToken=token)
 
@@ -46,11 +55,11 @@ def select_all_dates(action):
         if "NextToken" in response:
             # break
             token = response["NextToken"]
-            print("Collecting %s ... %d" % (action, len(result)))
+            print_collecting(action, result)
         else:
             break
 
-    print("Collecting %s ... %d" % (action, len(result)))
+    print_collecting(action, result)
     return result
 
 
@@ -93,14 +102,15 @@ def calc_print_stats(action):
     dates = select_all_dates(action)
     print("\n---" + action + "---")
     print_stats(dates)
+    print("")
 
 
 def main():
-    init()
+    if len(sys.argv) > 1:
+        init()
 
-    calc_print_stats("CC_COMM_SCHEDULED")
-    print("")
-    calc_print_stats("CC_FILE_UPLOADED")
+        for argv in sys.argv[1:]:
+            calc_print_stats(argv)
 
 
 if __name__ == "__main__":
