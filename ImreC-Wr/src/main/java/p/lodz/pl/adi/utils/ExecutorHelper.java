@@ -7,8 +7,8 @@ import java.util.concurrent.ThreadPoolExecutor;
 public class ExecutorHelper {
 
     public static final int MESSAGE_LIMIT = 10;
-    public static final int PROCESSOR_MULTIPLIER = 4;
-    public static final double NEED_MULTIPLIER = 1;
+    public static final int PROCESSOR_MULTIPLIER = 5;
+    public static final double NEED_MULTIPLIER = 5;
 
     private final int processors = Runtime.getRuntime().availableProcessors();
     private final int executorSlots = processors * PROCESSOR_MULTIPLIER;
