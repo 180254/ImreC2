@@ -10,11 +10,11 @@ table(class="table table-striped padding-top")
             if parentUrl !== null
                 a(href=encodeURI(parentUrl) class="breakable")=parentId
             unless parentUrl !== null
-                span(class="breakable")="N/A"
+                span(class="breakable")="n/a"
 
     tr
         td(class="col-xs-1 middle") Task
         td(id="info-comm-task")="(loading)"
     tr
-        td(class="col-xs-1 middle") Percent done
+        td(class="col-xs-1 middle") Done
         td(id="info-comm-percent")="(loading)"

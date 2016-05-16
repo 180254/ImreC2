@@ -35,15 +35,21 @@ var updateCommission = function () {
         var $percent = $('#info-comm-percent');
 
         if (!comm.task) {
-            $info.html('None');
-            $percent.html('N/A');
+            $info.html('n/a');
+            $percent.html('n/a');
 
         } else if (comm.task.scale !== undefined) {
             $info.html('scale = ' + comm.task.scale + '%');
 
             var hasFileLen = $('#file-table').find('tbody').children().length - 1;
             var hasPercent = hasFileLen / comm.files * 100;
-            $percent.html(hasPercent.toFixed(0) + '%')
+
+            var value = hasFileLen + ' files of ' + comm.files;
+            var valuePercent = $('<b/>').html((hasPercent.toFixed(0) + '%'));
+            var valueFull = $('<span/>').append(value + ' (').append(valuePercent).append(')');
+
+            $percent.html('');
+            $percent.append(valueFull);
         }
 
         updateSubCommissions(comm);
