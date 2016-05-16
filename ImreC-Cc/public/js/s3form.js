@@ -5,7 +5,9 @@ var LIMIT_UPLOADING_IN_SAME_TIME = 5;
 
 var initHideAble = function ($elem) {
     $elem.click(function () {
-        $elem.slideUp('slow');
+        $elem.slideUp('slow', function () {
+            $elem.remove();
+        });
     })
 };
 
