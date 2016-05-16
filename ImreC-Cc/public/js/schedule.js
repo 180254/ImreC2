@@ -12,7 +12,7 @@ var updateSelectedArea = function () {
     var selectedFilesNames2 = selectedFilesNames || 'None, select some files using checkbox in Files table.';
 
     $('#schedule-button').prop('disabled', selectedFilesNames === '');
-    $('#selected-area').html(selectedFilesNames2);
+    $('#selected-area').text(selectedFilesNames2);
 };
 
 /* eslint-disable no-unused-vars */
@@ -28,8 +28,8 @@ var addToScheduledTable = function (scale, files, storageUrl) {
     var $scheduledT = $('#scheduled-t');
     var scheduledRow = $scheduledT.find('tr:first').clone();
 
-    scheduledRow.find('span').html('scale=' + scale + '%; files=' + files);
-    scheduledRow.find('a').attr('href', encodeURI(storageUrl)).html(storageUrl);
+    scheduledRow.find('span').text('scale=' + scale + '%; files=' + files);
+    scheduledRow.find('a').attr('href', storageUrl).text(storageUrl);
     scheduledRow.removeClass('hidden').appendTo($scheduledT);
     $('#scheduled-h').removeClass('hidden');
 };
@@ -41,7 +41,7 @@ var onScheduleButton = function () {
     var param = {
         task: { scale: parseF($('#scale-info').attr('value')) },
         filesArr: getSelectedFileNames(),
-        storageId: $('#storage-id').html()
+        storageId: $('#storage-id').text()
     };
 
     //noinspection JSUnusedGlobalSymbols

@@ -27,7 +27,7 @@ var waitFor = function (test, expectedValue, msec, count, source, callback) {
 };
 
 var updateUploadQueue = function (uploadQueue) {
-    $('#upload-queue').html(uploadQueue);
+    $('#upload-queue').text(uploadQueue);
 };
 
 $(function () {
@@ -49,7 +49,7 @@ $(function () {
             updateUploadQueue(uploadQueue += data.files.length);
 
             data.files.forEach(function (file) {
-                waitFor(_isBusy, false, 1000, 0, file.name, function () {
+                waitFor(_isBusy, false, 1200, 0, file.name, function () {
                     uploading++;
 
                     if ($('.bar[data-file="' + file.name + '"]').length !== 0) {
@@ -90,7 +90,7 @@ $(function () {
                 var percent = Math.round((data.loaded / data.total) * 100);
                 $('.bar[data-file="' + file.name + '"]')
                     .css('width', percent + '%')
-                    .html(percent + '%');
+                    .text(percent + '%');
             });
 
         },
@@ -100,7 +100,7 @@ $(function () {
                 $('.bar[data-file="' + file.name + '"]')
                     .css('width', '100%')
                     .addClass('red')
-                    .html('Upload fail: ' + file.name);
+                    .text('Upload fail: ' + file.name);
 
                 initHideAble($('.progress[data-file="' + file.name + '"]'));
             });
@@ -123,12 +123,12 @@ $(function () {
 
                 var url = $form.attr('action');
                 var key = $form.find("input[name='key']").attr('value');
-                var fullUrl = url + '/' + key;
+                var fullUrl = url + '/' + encodeURIComponent(key);
 
                 initFileRow(file.name, fullUrl, true);
 
                 // /s/file/uploaded?s=STORAGE_ID&f=FILE_ID
-                var storageId = $('#storage-id').html();
+                var storageId = $('#storage-id').text();
                 var fileUploadedUrl = '/s/file/uploaded/?s='
                     + encodeURIComponent(storageId)
                     + '&f=' + encodeURIComponent(file.name);

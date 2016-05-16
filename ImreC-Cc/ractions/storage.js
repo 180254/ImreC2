@@ -68,7 +68,7 @@ var getFiles = function (id, callback) {
 
                 var file = {
                     name: fileName,
-                    url: aws.conf().S3.Url + '/' + id + '/' + fileName
+                    url: aws.conf().S3.Url + '/' + encodeURIComponent(id) + '/' + encodeURIComponent(fileName)
                 };
 
                 if (file.name !== INFO_JSON) files.push(file);

@@ -18,11 +18,11 @@ router.get('/', function (req, res) {
         else {
             var renderParams = {
                 id: id,
-                url: common.domainUrl(req) + '/s?id=' + id,
+                url: common.domainUrl(req) + '/s?id=' + encodeURIComponent(id),
 
                 parentId: comm.parentComm || 'None',
                 parentUrl: comm.parentComm !== null
-                    ? common.domainUrl(req) + '/s?id=' + comm.parentComm
+                    ? common.domainUrl(req) + '/s?id=' + encodeURIComponent(comm.parentComm)
                     : null,
 
                 isTask: comm.task !== null,

@@ -15,7 +15,7 @@ router.post('/new', function (req, res) {
 
         else {
             res.contentType('application/json');
-            var storageUrl = common.domainUrl(req) + '/s?id=' + storageId;
+            var storageUrl = common.domainUrl(req) + '/s?id=' + encodeURIComponent(storageId);
             res.send(JSON.stringify({ 'storageUrl': storageUrl }));
 
             logger.log(req, 'CC_REQ_COMM_NEW', common.fullUrl(req), JSON.stringify(req.body), storageId);

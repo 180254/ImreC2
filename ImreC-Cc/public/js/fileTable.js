@@ -11,8 +11,8 @@ var initFileRow = function (name, url, doInitMeta) {
     $checkbox.attr('value', name);
 
     var $find = $($cols.get(3)).find('a');
-    $find.attr('href', encodeURI(url));
-    $find.html(name);
+    $find.attr('href', url);
+    $find.text(name);
 
     $fileRow.removeClass('hidden');
     $table.append($fileRow);
@@ -22,7 +22,7 @@ var initFileRow = function (name, url, doInitMeta) {
 };
 
 var initFileTable = function () {
-    var storageId = $('#storage-id').html();
+    var storageId = $('#storage-id').text();
     var metaUrl = '/s/file/?s=' + encodeURIComponent(storageId);
 
     //noinspection NodeModulesDependencies

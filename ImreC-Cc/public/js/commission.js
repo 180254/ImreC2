@@ -2,7 +2,7 @@
 /* global addToScheduledTable, ajaxError */
 
 var getCommission = function (callback) {
-    var storageId = $('#storage-id').html();
+    var storageId = $('#storage-id').text();
     var commUrl = '/s/comm/?s=' + encodeURIComponent(storageId);
 
     //noinspection NodeModulesDependencies
@@ -19,7 +19,7 @@ var updateSubCommissions = function (comm) {
             addToScheduledTable(
                 subComm.task.scale,
                 subComm.files,
-                domainUrl + '/s?id=' + subComm.storageId);
+                domainUrl + '/s?id=' + encodeURIComponent(subComm.storageId));
         }
     })
 };
@@ -33,20 +33,20 @@ var updateCommission = function () {
         var $percent = $('#info-comm-percent');
 
         if (!comm.task) {
-            $info.html('n/a');
-            $percent.html('n/a');
+            $info.text('n/a');
+            $percent.text('n/a');
 
         } else if (comm.task.scale !== undefined) {
-            $info.html('scale = ' + comm.task.scale + '%');
+            $info.text('scale = ' + comm.task.scale + '%');
 
             var hasFileLen = $('#file-table').find('tbody').children().length - 1;
             var hasPercent = hasFileLen / comm.files * 100;
 
             var value = hasFileLen + ' files of ' + comm.files;
-            var valuePercent = $('<b/>').html((hasPercent.toFixed(0) + '%'));
+            var valuePercent = $('<b/>').text((hasPercent.toFixed(0) + '%'));
             var valueFull = $('<span/>').append(value + ' (').append(valuePercent).append(')');
 
-            $percent.html('');
+            $percent.text('');
             $percent.append(valueFull);
         }
 

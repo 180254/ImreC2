@@ -2,13 +2,13 @@ table(class="table table-striped padding-top")
     tr
         td(class="col-xs-2 middle") Storage ID
         td
-            a(href=encodeURI(url) class="breakable" id="storage-id")=id
+            a(href=url class="breakable" id="storage-id")=id
 
     tr
         td(class="col-xs-2 middle") Parent ID
         td
             if parentUrl !== null
-                a(href=encodeURI(parentUrl) class="breakable")=parentId
+                a(href=parentUrl class="breakable")=parentId
             unless parentUrl !== null
                 span(class="breakable")="n/a"
 
