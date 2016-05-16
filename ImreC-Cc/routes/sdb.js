@@ -12,8 +12,8 @@ router.get('/', function (req, res) {
 
     var params = {
         SelectExpression: 'select * from ' + aws.conf().Sdb.Domain
-        + ' where bDate like "%"'
-        + ' order by bDate desc'
+        + ' where cDate like "%"'
+        + ' order by cDate desc'
     };
 
     aws.sdb().select(params, function (err, data) {
