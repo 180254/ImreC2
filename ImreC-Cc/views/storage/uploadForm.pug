@@ -1,3 +1,7 @@
+p
+    span Note: you can add more then file at once.#[br]
+    span Note: drag&drop also works.
+
 form(action=s3form.url method="post" enctype="multipart/form-data" id="s3form")
     each key in s3form.s3fields
         input(type="hidden" name=key.name value=key.value)
