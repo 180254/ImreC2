@@ -4,10 +4,9 @@ import com.amazonaws.services.sqs.model.Message;
 import p.lodz.pl.adi.config.CoProvider;
 import p.lodz.pl.adi.config.Conf;
 import p.lodz.pl.adi.config.Config0;
-import p.lodz.pl.adi.utils.AmazonHelper;
-import p.lodz.pl.adi.utils.ExecutorHelper;
-import p.lodz.pl.adi.utils.ImageResizer;
-import p.lodz.pl.adi.utils.Logger;
+import p.lodz.pl.adi.env.EnvHelper;
+import p.lodz.pl.adi.env.EnvValue;
+import p.lodz.pl.adi.utils.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,18 +18,15 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class App {
-
-    public static final String SLEEP_ENV_NAME = "WRSLEEP";
-    public static final int DEFAULT_SLEEP_SECONDS = 5;
-
     private final Logger logger;
 
     private final ImageResizer im;
     private final AmazonHelper am;
-
     private final ExecutorHelper executor;
 
     private final int sleepSeconds;
+    private final int sleepOnFullSeconds;
+
     private final String selfIp;
 
     public App() throws IOException {
@@ -45,26 +41,10 @@ public class App {
         am.setLogger(logger); // circular dependency!?
 
         executor = new ExecutorHelper();
-        sleepSeconds = getSleepSeconds();
-    }
 
-    private int getSleepSeconds() {
-        String sleep = System.getenv(SLEEP_ENV_NAME);
-        if (sleep == null) {
-            return DEFAULT_SLEEP_SECONDS;
-        }
-
-        try {
-            int sleep2 = Integer.parseInt(sleep);
-            if (sleep2 > 0) return sleep2;
-            else {
-                logger.log2("INT_SLEEP_SECONDS", "Env set but <= 0.");
-                return DEFAULT_SLEEP_SECONDS;
-            }
-        } catch (NumberFormatException ignored) {
-            logger.log2("INT_SLEEP_SECONDS", "Env set but exception.");
-            return DEFAULT_SLEEP_SECONDS;
-        }
+        EnvHelper envHelper = new EnvHelper(logger);
+        sleepSeconds = envHelper.getIntFromEnv(EnvValue.SleepSeconds);
+        sleepOnFullSeconds = envHelper.getIntFromEnv(EnvValue.SleepOnFullSeconds);
     }
 
     public String getSelfIp() throws IOException {
@@ -82,13 +62,15 @@ public class App {
     }
 
     public void service() throws InterruptedException {
-        logger.log2("INT_SLEEP_SECONDS", sleepSeconds);
-        logger.log2("INT_SELF_IP", selfIp);
-
         //noinspection InfiniteLoopStatement
         do {
 
             int needTasks = executor.needTasks();
+            if (needTasks <= 0) {
+                TimeUnit.SECONDS.sleep(sleepOnFullSeconds);
+                continue;
+            }
+
             List<Message> messages = am.sqs$receiveMessages(needTasks);
 
             for (Message message : messages) {
@@ -96,7 +78,7 @@ public class App {
                         message, logger, am, im, selfIp,
                         () -> logger.log2("INT_SERVICE",
                                 executor.getCompletedTaskCount() + 1,
-                                executor.getActiveCount() - 1)
+                                executor.getNotCompletedCount() - 1)
                 );
 //                resizeTask.run();
                 executor.submit(resizeTask);

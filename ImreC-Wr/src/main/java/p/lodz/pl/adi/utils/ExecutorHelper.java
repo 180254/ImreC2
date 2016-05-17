@@ -8,26 +8,30 @@ public class ExecutorHelper {
 
     public static final int MESSAGE_LIMIT = 10;
     public static final int PROCESSOR_MULTIPLIER = 5;
-    public static final double NEED_MULTIPLIER = 5;
+    public static final double NEED_MULTIPLIER = 3;
 
-    private final int processors = Runtime.getRuntime().availableProcessors();
-    private final int executorSlots = processors * PROCESSOR_MULTIPLIER;
-    private final ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(executorSlots);
+    private final int _processors = Runtime.getRuntime().availableProcessors();
+    private final int _executorSlots = _processors * PROCESSOR_MULTIPLIER;
+    private final int _capacity = (int) (_executorSlots * NEED_MULTIPLIER);
 
-    public int getActiveCount() {
-        return executor.getActiveCount();
-    }
+    private final ThreadPoolExecutor _executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(_executorSlots);
 
     public long getCompletedTaskCount() {
-        return executor.getCompletedTaskCount();
+        return _executor.getCompletedTaskCount();
+    }
+
+    public int getNotCompletedCount() {
+        int queued = _executor.getQueue().size();
+        int active = _executor.getActiveCount();
+        return queued + active;
     }
 
     public int needTasks() {
-        int need = (int) (executorSlots * NEED_MULTIPLIER - executor.getActiveCount());
+        int need = _capacity - getNotCompletedCount();
         return Math.min(MESSAGE_LIMIT, need);
     }
 
     public Future<?> submit(Runnable task) {
-        return executor.submit(task);
+        return _executor.submit(task);
     }
 }
