@@ -80,8 +80,13 @@ public class App {
                                 executor.getCompletedTaskCount() + 1,
                                 executor.getNotCompletedCount() - 1)
                 );
+
 //                resizeTask.run();
                 executor.submit(resizeTask);
+
+                logger.log2("INT_SERVICE",
+                        executor.getCompletedTaskCount(),
+                        executor.getNotCompletedCount());
             }
 
             TimeUnit.SECONDS.sleep(sleepSeconds);

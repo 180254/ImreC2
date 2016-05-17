@@ -41,7 +41,7 @@ public class ResizeTask implements Runnable {
 
     @Override
     public void run() {
-        logger.log("MESSAGE_PROC_START", message.getBody());
+        logger.log("MESSAGE_PROC_START", message.getMessageId(), message.getBody());
 
         Commission commission = null;
         ObjectMetadata itemMetadataBackup = null;
@@ -58,7 +58,10 @@ public class ResizeTask implements Runnable {
             InputStream object$is = itemObject.getObjectContent();
             int sizeMultiplier = commission.getTask().getScale();
             String imageType = FilenameUtils.getExtension(commission.getFilename());
+
+            logger.log("IMAGE_RESIZE_START", message.getMessageId(), message.getBody());
             InputStreamE resized = ir.resize(object$is, sizeMultiplier, imageType);
+            logger.log("IMAGE_RESIZE_SUCCESS", message.getMessageId(), message.getBody());
 
             // update metadata
             itemMetadata.getUserMetadata().put(Meta.WORKER, selfIp);
@@ -70,9 +73,13 @@ public class ResizeTask implements Runnable {
                     itemMetadata, CannedAccessControlList.PublicRead);
             am.sqs$deleteMessageAsync(message);
 
+            logger.log("MESSAGE_PROC_SUCCESS", message.getMessageId(), message.getBody());
+
+
         } catch (IOException | ResizingException | IllegalArgumentException | AmazonS3Exception ex) {
             // bad/forbidden task
-            logger.log("MESSAGE_PROC_STOP", message.getBody(), ex.getClass().getName(), ex.getMessage());
+            logger.log("MESSAGE_PROC_STOP", message.getMessageId(), message.getBody(),
+                    ex.getClass().getName(), ex.getMessage());
 
             if (commission != null && itemMetadataBackup != null) {
                 itemMetadataBackup.getUserMetadata().put(Meta.WORKER, selfIp);
@@ -85,7 +92,8 @@ public class ResizeTask implements Runnable {
             am.sqs$deleteMessageAsync(message);
 
         } catch (RuntimeException ex) {
-            logger.log("MESSAGE_PROC_EXCEPTION", message.getBody(), ex.getClass().getName(), ex.getMessage());
+            logger.log("MESSAGE_PROC_EXCEPTION", message.getMessageId(), message.getBody(),
+                    ex.getClass().getName(), ex.getMessage());
 
             am.sqs$changeVisibilityTimeoutAsync(message, VISIBILITY_NEW_TIMEOUT_SEC);
 
