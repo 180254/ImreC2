@@ -18,9 +18,19 @@ var log = function (req, action) {
     attributes.push({ Name: 'dReqIP', Value: ip(req) });
     attributes.push({ Name: 'eAction', Value: action });
 
+    var SDB_LENGTH_LIMIT = 1024;
+
     if (arguments.length > 2) {
         for (var i = 2; i < arguments.length; i++) {
-            attributes.push({ Name: 'fArg_' + (i - 2), Value: arguments[i] });
+            if (arguments[i].length <= SDB_LENGTH_LIMIT) {
+                attributes.push({ Name: 'fArg_' + (i - 2), Value: arguments[i] });
+
+            } else {
+                var chunk = common.chunkString(arguments[i], SDB_LENGTH_LIMIT);
+                for (var c = 0; c < chunk.length; c++) {
+                    attributes.push({ Name: 'fArg_' + (i - 2) + '_' + c, Value: chunk[c] });
+                }
+            }
         }
     }
 

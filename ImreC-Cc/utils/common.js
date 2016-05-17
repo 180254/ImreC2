@@ -87,6 +87,12 @@ var pad = function (n, width, z) {
     return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
 };
 
+// credits: friends @ stackoverflow
+// http://stackoverflow.com/questions/7033639/split-large-string-in-n-size-chunks-in-javascript
+var chunkString = function (str, length) {
+    return str.match(new RegExp('.{1,' + length + '}', 'g'));
+};
+
 exports.readJson = readJson;
 exports.uuid = uuid;
 exports.random2 = random2;
@@ -94,4 +100,5 @@ exports.clone = clone;
 exports.fullUrl = fullUrl;
 exports.domainUrl = domainUrl;
 exports.pad = pad;
+exports.chunkString = chunkString;
 
