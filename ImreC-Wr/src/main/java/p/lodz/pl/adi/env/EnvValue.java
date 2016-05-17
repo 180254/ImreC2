@@ -2,7 +2,9 @@ package p.lodz.pl.adi.env;
 
 public enum EnvValue {
     SleepSeconds("WRSLEEP", 1),
-    SleepOnFullSeconds("WRSLEEPFULL", 3);
+    SleepOnFullSeconds("WRSLEEPFULL", 3),
+    ImageSizeLimitPixels("WRSIZELIMIT", Integer.MAX_VALUE),
+    ImageResizeTimeLimit("WRTIMELIMIT", 5);
 
     private String envName;
     private int defaultValue;

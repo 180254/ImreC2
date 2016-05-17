@@ -14,9 +14,6 @@ http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-lo
 2.2.1 Set Receive Message Wait Time as WaitTimeSeconds conf.json
 2.2.2 Should be = 0 if Long Pooling is "disabled"
 
-2.3 Note: [Imrec-Wr] Default sleep time between sqs query is 5s.
-2.3.1 Set env var called WRSLEEP if you want change it.
-
 3. Create S3 bucket.
 3.1 Set bucket file deletion policy in AWS console.
 3.2 Set CORS configuration, example *bad security* file:
@@ -68,6 +65,18 @@ sudo -H -u bitnami bash -c 'cd ~/ImreC2/ImreC-Wr && /usr/bin/screen -dm /usr/bin
 
 4.1.2.3 Note: For ImreC-Cc total startup time equals approx ~300 seconds
 4.1.2.4 Note: For ImreC-Wr total startup time equals approx ~450 seconds
+
+4.1.3.1 Note: [Imrec-Wr] Default sleep time between sqs query is 1s.
+4.1.3.2 Set env var called WRSLEEP if you want change it.
+
+4.1.4.1 Note: [Imrec-Wr] Default sleep if executor capacity is met is 3s.
+4.1.4.2 Set env var called WRSLEEPFULL if you want change it.
+
+4.1.5.1 Note: [Imrec-Wr] Default limit of number of pixels in image is Integer.MAX_VALUE.
+4.1.5.2 Set env var called WRSIZELIMIT if you want change it.
+
+4.1.6.1 Note: [Imrec-Wr] Default limit of image resizing time is 5 seconds.
+4.1.6.2 Set env var called WRTIMELIMIT if you want change it.
 
 4.2. Add ASG for ImreC-[Cc,Wr]
 4.3. Add ELB for ImreC-Cc

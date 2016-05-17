@@ -18,8 +18,14 @@ public class ImageResizer {
             "PNG", "GIF", "BMP", "JPG", "JPEG",
     };
 
+    private final int imageSizeLimitPixels;
+
+    public ImageResizer(int imageSizeLimitPixels) {
+        this.imageSizeLimitPixels = imageSizeLimitPixels;
+    }
+
     /**
-     * @throws ResizingException if resizing failed due to IO
+     * @throws ResizingException        if resizing failed due to IO
      * @throws IllegalArgumentException if resizing failed due to arguments
      */
     public InputStreamE resize(InputStream is, int sizeMultiplier, String imageType) throws ResizingException {
@@ -31,16 +37,17 @@ public class ImageResizer {
             if (srcImage == null) {
                 throw new ResizingException("srcImage == null");
             }
+            ensureImageSize(srcImage);
 
             double sizeMultiplier2 = sizeMultiplier / 100.0;
-            int newWidth = (int) (srcImage.getWidth() * sizeMultiplier2);
-            int newHeight = (int) (srcImage.getHeight() * sizeMultiplier2);
+            int newWidth = Math.min(1, (int) (srcImage.getWidth() * sizeMultiplier2));
+            int newHeight = Math.min(1, (int) (srcImage.getHeight() * sizeMultiplier2));
 
             BufferedImage scaledImage = Scalr.resize(srcImage, newWidth, newHeight);
 
             return makeResult(scaledImage, imageType);
 
-        } catch (IOException e) {
+        } catch (IOException | OutOfMemoryError e) {
             throw new ResizingException(e);
         }
     }
@@ -64,6 +71,12 @@ public class ImageResizer {
     private void ensureSizeMultiplier(int sizeMultiplier) {
         if (sizeMultiplier < 1 || sizeMultiplier > 200) {
             throw new IllegalArgumentException("sizeMultiplier");
+        }
+    }
+
+    private void ensureImageSize(BufferedImage srcImage) {
+        if (srcImage.getWidth() * srcImage.getHeight() > imageSizeLimitPixels) {
+            throw new IllegalArgumentException("imageSizes");
         }
     }
 }

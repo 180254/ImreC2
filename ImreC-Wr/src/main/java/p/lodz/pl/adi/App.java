@@ -6,7 +6,10 @@ import p.lodz.pl.adi.config.Conf;
 import p.lodz.pl.adi.config.Config0;
 import p.lodz.pl.adi.env.EnvHelper;
 import p.lodz.pl.adi.env.EnvValue;
-import p.lodz.pl.adi.utils.*;
+import p.lodz.pl.adi.utils.AmazonHelper;
+import p.lodz.pl.adi.utils.ExecutorHelper;
+import p.lodz.pl.adi.utils.ImageResizer;
+import p.lodz.pl.adi.utils.Logger;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,6 +29,7 @@ public class App {
 
     private final int sleepSeconds;
     private final int sleepOnFullSeconds;
+    private final int imageResizeTimeLimitSeconds;
 
     private final String selfIp;
 
@@ -36,15 +40,17 @@ public class App {
 
         am = new AmazonHelper(config, conf);
         logger = new Logger(am, selfIp);
-        im = new ImageResizer();
 
+        EnvHelper envHelper = new EnvHelper(logger);
+
+        im = new ImageResizer(envHelper.getIntFromEnv(EnvValue.ImageSizeLimitPixels));
         am.setLogger(logger); // circular dependency!?
 
         executor = new ExecutorHelper();
 
-        EnvHelper envHelper = new EnvHelper(logger);
         sleepSeconds = envHelper.getIntFromEnv(EnvValue.SleepSeconds);
         sleepOnFullSeconds = envHelper.getIntFromEnv(EnvValue.SleepOnFullSeconds);
+        imageResizeTimeLimitSeconds = envHelper.getIntFromEnv(EnvValue.ImageResizeTimeLimit);
     }
 
     public String getSelfIp() throws IOException {
@@ -76,6 +82,7 @@ public class App {
             for (Message message : messages) {
                 Runnable resizeTask = new ResizeTask(
                         message, logger, am, im, selfIp,
+                        imageResizeTimeLimitSeconds,
                         () -> logger.log2("INT_SERVICE",
                                 executor.getCompletedTaskCount() + 1,
                                 executor.getNotCompletedCount() - 1)
@@ -95,6 +102,7 @@ public class App {
 
     public static void main(String[] args)
             throws IOException, InterruptedException {
+
         new App().service();
     }
 

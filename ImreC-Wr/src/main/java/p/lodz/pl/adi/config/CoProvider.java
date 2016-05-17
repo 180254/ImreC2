@@ -41,6 +41,6 @@ public class CoProvider {
 
         return new ObjectMapper()
                 .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-                .reader(clazz).readValue(content);
+                .readerFor(clazz).readValue(content);
     }
 }
