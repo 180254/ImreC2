@@ -33,6 +33,7 @@ var initFileTable = function () {
         for (var i = 0; i < data.length; i++) {
             initFileRow(data[i].name, data[i].url, false);
         }
+        $('#storage-count').text(data.length);
         initMetaTable();
 
     }).fail(ajaxError);

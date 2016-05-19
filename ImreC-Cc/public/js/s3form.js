@@ -137,6 +137,9 @@ $(function () {
                 $.get(fileUploadedUrl);
             });
 
+            var hasFileLen = $('#file-table').find('tbody').children().length - 1;
+            $('#storage-count').text(hasFileLen);
+
             uploading--;
             updateUploadQueue(uploadQueue -= data.files.length);
         }

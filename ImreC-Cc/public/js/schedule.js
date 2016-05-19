@@ -8,11 +8,13 @@ var getSelectedFileNames = function () {
 };
 
 var updateSelectedArea = function () {
-    var selectedFilesNames = getSelectedFileNames().join('\n');
-    var selectedFilesNames2 = selectedFilesNames || 'None, select some files using checkbox in Files table.';
+    var selectedFileNames = getSelectedFileNames();
+    var selectedFileNames2 = selectedFileNames.join('\n');
+    var selectedFileNames3 = selectedFileNames2 || 'None, select some files using checkbox in Files table.';
 
-    $('#schedule-button').prop('disabled', selectedFilesNames === '');
-    $('#selected-area').text(selectedFilesNames2);
+    $('#schedule-button').prop('disabled', selectedFileNames2 === '');
+    $('#selected-area').text(selectedFileNames3);
+    $('#selected-count').text(selectedFileNames.length);
 };
 
 /* eslint-disable no-unused-vars */
