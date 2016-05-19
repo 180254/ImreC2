@@ -40,8 +40,8 @@ public class ImageResizer {
             ensureImageSize(srcImage);
 
             double sizeMultiplier2 = sizeMultiplier / 100.0;
-            int newWidth = Math.min(1, (int) (srcImage.getWidth() * sizeMultiplier2));
-            int newHeight = Math.min(1, (int) (srcImage.getHeight() * sizeMultiplier2));
+            int newWidth = Math.max(1, (int) (srcImage.getWidth() * sizeMultiplier2));
+            int newHeight = Math.max(1, (int) (srcImage.getHeight() * sizeMultiplier2));
 
             BufferedImage scaledImage = Scalr.resize(srcImage, newWidth, newHeight);
 
