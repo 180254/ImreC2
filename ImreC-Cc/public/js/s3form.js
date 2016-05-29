@@ -11,7 +11,9 @@ var initHideAble = function ($elem) {
     })
 };
 
-// credits: http://stackoverflow.com/a/14811679
+// credits: friends @ stackoverflow
+// http://stackoverflow.com/a/14811679
+// license: https://creativecommons.org/licenses/by-sa/3.0/
 var waitFor = function (test, expectedValue, msec, count, source, callback) {
     //noinspection LoopStatementThatDoesntLoopJS
     while (test() !== expectedValue) {
